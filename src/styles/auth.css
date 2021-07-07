@@ -1,0 +1,98 @@
+.outer-container {
+  position: relative;
+  width: 30vw;
+  height: 60vh;
+  margin: auto;
+  margin-top: 20vh;
+  background: #ffffff;
+  box-shadow: 0 0 50rem rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  padding-left: 2.5rem;
+  padding-top: 1rem;
+}
+
+.welcome {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  color: #1687a7;
+  font-size: 1.5rem;
+}
+
+.logo {
+  position: absolute;
+  right: 3rem;
+}
+
+.heading {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  color: rgba(22, 135, 167, 0.87);
+  font-size: 2rem;
+  margin-top: 0%;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 2.5rem;
+}
+
+.input {
+  position: relative;
+  width: 75%;
+  height: 1.75rem;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  background: #f4f9f9;
+  border-radius: 0.5rem;
+  border: hidden;
+  padding: 0.5rem;
+}
+
+input::placeholder {
+  color: #1687a7;
+  font-size: 1rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  padding-left: 5.9rem;
+}
+
+.button-solid {
+  background: #1687a7;
+  border-radius: 0.5rem;
+  border: hidden;
+  color: #f4f9f9;
+  height: fit-content;
+  width: 40%;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.footer-right {
+  position: absolute;
+  font-size: 0.8rem;
+  line-height: 0.2rem;
+  right: 3.6rem;
+  padding: 0.4rem;
+}
+
+.graytext {
+  color: #a1a1a1;
+}
+
+.text-button {
+  color: #1687a7;
+  cursor: pointer;
+}

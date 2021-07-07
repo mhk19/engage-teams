@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  position: relative;
+  top: 2rem;
+  margin-left: 6rem;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  width: 90vw;
+}
+
+.light-text {
+  font-size: 1rem;
+  line-height: 2rem;
+  color: rgba(22, 135, 167, 0.6);
+}
+
+.dark-text {
+  color: #1687a7;
+  margin-right: 1rem;
+}
+
+.time-text {
+  position: absolute;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #1687a7;
+}
+
+.controller {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: absolute;
+  bottom: 2rem;
+  margin-left: 45vw;
+}
+
+.controller-icon {
+  margin: 1.25rem;
+  cursor: pointer;
+}
+
+.video-container {
+  width: 40vw;
+  height: 50vh;
+}
+
+.outer-video-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 35rem;
+}
+
+#local-video {
+  margin-top: 7rem;
+}
+
+#remote-video {
+  margin-left: 2rem;
+  margin-right: 5rem;
+  margin-top: 7rem;
+}

@@ -1,0 +1,48 @@
+import {
+  ADD_LOCAL_STREAM,
+  REMOVE_LOCAL_STREAM,
+  TOGGLE_MIC,
+  TOGGLE_VIDEO,
+  MICROPHONE,
+  SPEAKER,
+  CAMERA,
+  SET_DISPLAY_NAME,
+} from '../constants/action-types';
+
+export const AddLocalStream = (data) => ({
+  type: ADD_LOCAL_STREAM,
+  payload: data,
+});
+
+export const RemoveLocalStream = (data) => ({
+  type: REMOVE_LOCAL_STREAM,
+  payload: data,
+});
+
+export const ToggleMic = () => ({
+  type: TOGGLE_MIC,
+});
+
+export const ToggleVideo = () => ({
+  type: TOGGLE_VIDEO,
+});
+
+export const SetMicrophone = (data) => ({
+  type: MICROPHONE,
+  payload: data,
+});
+
+export const SetSpeaker = (data) => ({
+  type: SPEAKER,
+  payload: data,
+});
+
+export const SetCamera = (data) => ({
+  type: CAMERA,
+  payload: data,
+});
+
+export const SetDisplayName = (data) => ({
+  type: SET_DISPLAY_NAME,
+  payload: data,
+});

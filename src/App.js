@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import NavBar from './components/navbar';
+import VideoCall from './components/videocall';
+// import getUser from './utils/getUser';
+// import WelcomePage from './components/auth';
+import { getCookie } from './utils/handleCookies';
 
-function App() {
+// const mapStateToProps = state => {
+//   return {
+//     user: state.user,
+//   };
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     getUser: () => getUser(dispatch),
+//   };
+// }
+
+const App = (props) => {
+  const [userId, setUserId] = useState('');
+  const id = getCookie('userid');
+  if (id !== userId) setUserId(getCookie('userid'));
+  useEffect(() => {
+    //props.getUser();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <VideoCall />
+      {/* <WelcomePage authtype='Register'/> */}
     </div>
   );
-}
+};
 
 export default App;
