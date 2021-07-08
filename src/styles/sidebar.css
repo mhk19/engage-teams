@@ -29,3 +29,11 @@
   top: 3.5rem;
   left: 0.5rem;
 }
+
+.secondary-heading {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  color: #1687a7;
+  text-align: left;
+}
