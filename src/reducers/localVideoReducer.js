@@ -7,6 +7,7 @@ import {
   SPEAKER,
   CAMERA,
   SET_DISPLAY_NAME,
+  SET_LOCAL_USER_ID,
 } from '../constants/action-types';
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   speaker: '',
   camera: '',
   displayName: '',
+  userId: '',
 };
 
 export default function localVideoReducer(state = initialState, action) {
@@ -67,6 +69,12 @@ export default function localVideoReducer(state = initialState, action) {
       return {
         ...state,
         displayName: action.payload.displayName,
+      };
+
+    case SET_LOCAL_USER_ID:
+      return {
+        ...state,
+        userId: action.payload.userId,
       };
 
     default:

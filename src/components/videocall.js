@@ -4,6 +4,7 @@ import * as remoteActions from '../actions/remoteVideoUserActions';
 import * as localActions from '../actions/localVideoUserActions';
 import * as participantActions from '../actions/participantListActions';
 import * as deviceManagementActions from '../actions/deviceActions';
+import * as threadActions from '../actions/threadActions';
 import Participants from './participantList';
 import copy from '../assets/images/copy.svg';
 import mic from '../assets/images/mic.svg';
@@ -37,8 +38,23 @@ const VideoCall = () => {
     });
     dispatch(localActions.SetDisplayName({ displayName: 'Mahak Gupta' }));
     dispatch(
-      participantActions.AddParticipant({ user: { userId: 'user 1', displayName: 'Mahak Gupta' } }),
+      participantActions.AddParticipant({
+        user: {
+          userId: '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-2404-7645-54b7-a43a0d00e330',
+          displayName: 'Mahak Gupta',
+        },
+      }),
     );
+    dispatch(
+      localActions.SetUserId({
+        userId: '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-2404-7645-54b7-a43a0d00e330',
+      }),
+    );
+    // dispatch(
+    //   threadActions.SetThreadId({
+    //     threadId: '19:HTOg4V-bNfYPLgr0a2T70v5Hv367bdf1Nh0X15meWOg1@thread.v2',
+    //   }),
+    // );
     const deviceManager = await callClient.getDeviceManager();
     deviceManagerRef.current = deviceManager;
     const context = { groupId: '577d1801-2912-49c4-9e3e-b9672e9fc0c6' };
@@ -87,6 +103,9 @@ const VideoCall = () => {
     });
     call.on('isMutedChanged', () => {
       console.log(call.isMuted);
+    });
+    call.on('localVideoStreamsUpdated', () => {
+      console.log('Local video stream updated');
     });
     deviceManager.on('audioDevicesUpdated', async () => {
       const microphones = await deviceManagerRef.current.getMicrophones();

@@ -3,12 +3,14 @@ import {
   REMOVE_REMOTE_STREAM,
   TOGGLE_IS_REMOTE_VIDEO_AVAILABLE,
   SET_REMOTE_USER_NAME,
+  SET_REMOTE_USER_ID,
 } from '../constants/action-types';
 
 const initialState = {
   remoteVideoStream: null,
   isAvailable: false,
   displayName: '',
+  userId: '',
 };
 
 export default function remoteVideoReducer(state = initialState, action) {
@@ -35,6 +37,12 @@ export default function remoteVideoReducer(state = initialState, action) {
       return {
         ...state,
         displayName: action.payload.displayName,
+      };
+
+    case SET_REMOTE_USER_ID:
+      return {
+        ...state,
+        userId: action.payload.userId,
       };
 
     default:

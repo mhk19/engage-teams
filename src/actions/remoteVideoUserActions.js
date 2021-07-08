@@ -3,6 +3,7 @@ import {
   REMOVE_REMOTE_STREAM,
   TOGGLE_IS_REMOTE_VIDEO_AVAILABLE,
   SET_REMOTE_USER_NAME,
+  SET_REMOTE_USER_ID,
 } from '../constants/action-types';
 
 export const AddRemoteStream = (data) => ({
@@ -22,5 +23,10 @@ export const ToggleIsRemoteVideoAvailable = (data) => ({
 
 export const SetRemoteUserName = (data) => ({
   type: SET_REMOTE_USER_NAME,
+  payload: data,
+});
+
+export const SetRemoteUserId = (data) => ({
+  type: SET_REMOTE_USER_ID,
   payload: data,
 });
