@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { FluentThemeProvider, MessageThread, SendBox } from '@azure/communication-react';
-import GetHistoryChatMessages from './placeholdermessages';
 import '../styles/sidebar.css';
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
@@ -112,8 +111,8 @@ const MessageContainer = () => {
           console.log(thread.messages);
         }
       });
-    }
-  )}, []);
+    });
+  }, []);
   const msgThreadStyles = {
     chatContainer: {
       backgroundColor: 'rgba(22, 135, 167, 0.15)',
