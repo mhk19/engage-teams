@@ -8,6 +8,7 @@ import {
   CAMERA,
   SET_DISPLAY_NAME,
   SET_LOCAL_USER_ID,
+  SET_TOKENS,
 } from '../constants/action-types';
 
 export const AddLocalStream = (data) => ({
@@ -50,5 +51,10 @@ export const SetDisplayName = (data) => ({
 
 export const SetUserId = (data) => ({
   type: SET_LOCAL_USER_ID,
+  payload: data,
+});
+
+export const SetTokens = (data) => ({
+  type: SET_TOKENS,
   payload: data,
 });

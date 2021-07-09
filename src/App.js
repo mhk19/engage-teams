@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import NavBar from './components/navbar';
 import VideoCall from './components/videocall';
-// import getUser from './utils/getUser';
-// import WelcomePage from './components/auth';
+import WelcomePage from './components/auth';
 import { getCookie } from './utils/handleCookies';
+import * as localUserActions from './actions/localVideoUserActions';
+import { useDispatch, useSelector } from 'react-redux';
+import * as userFunctions from './api/userApi';
 
 // const mapStateToProps = state => {
 //   return {
@@ -18,18 +20,31 @@ import { getCookie } from './utils/handleCookies';
 //   };
 // }
 
-const App = (props) => {
-  const [userId, setUserId] = useState('');
-  const id = getCookie('userid');
-  if (id !== userId) setUserId(getCookie('userid'));
+const App = () => {
+  const [authType, setAuthType] = useState('Register');
+  const dispatch = useDispatch();
+  const localUserStore = useSelector((state) => state.localVideoUser);
   useEffect(() => {
-    //props.getUser();
-  }, []);
+    const id = getCookie('userid');
+    if (id) {
+      const tokens = userFunctions.getToken(id);
+      dispatch(localUserActions.SetUserId({ userId: id }));
+      dispatch(
+        localUserActions.SetTokens({ callToken: tokens.callToken, chatToken: token.chatToken }),
+      );
+    }
+    // eslint-disable-next-line
+  }, [localUserStore.userId]);
   return (
     <div className="App">
-      <NavBar />
-      <VideoCall />
-      {/* <WelcomePage authtype='Register'/> */}
+      {localUserStore.userId === '' ? (
+        <WelcomePage authtype={authType} setAuthType={setAuthType} />
+      ) : (
+        <div>
+          <NavBar />
+          <VideoCall />
+        </div>
+      )}
     </div>
   );
 };

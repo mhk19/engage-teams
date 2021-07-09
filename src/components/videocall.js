@@ -4,7 +4,6 @@ import * as remoteActions from '../actions/remoteVideoUserActions';
 import * as localActions from '../actions/localVideoUserActions';
 import * as participantActions from '../actions/participantListActions';
 import * as deviceManagementActions from '../actions/deviceActions';
-import * as threadActions from '../actions/threadActions';
 import Participants from './participantList';
 import copy from '../assets/images/copy.svg';
 import mic from '../assets/images/mic.svg';
@@ -165,18 +164,22 @@ const VideoCall = () => {
   };
   useEffect(() => {
     joinCall();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (deviceManagerRef.current) deviceManagement();
+    // eslint-disable-next-line
   }, [deviceManagerRef.current]);
 
   useEffect(() => {
     renderRemoteVideoStream();
+    // eslint-disable-next-line
   }, [remoteStore.remoteVideoStream]);
 
   useEffect(() => {
     renderLocalVideoStream();
+    // eslint-disable-next-line
   }, [localStore.localVideoStream, localStore.isVideoOn]);
 
   useEffect(() => {

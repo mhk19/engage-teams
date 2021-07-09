@@ -2,7 +2,6 @@ import User from './model.js';
 import mongodb from 'mongodb';
 import env from './env/env.js';
 import { CommunicationIdentityClient } from '@azure/communication-identity';
-import CommunicationUserIdentifier from '@azure/communication-common';
 
 const { ReadPreference } = mongodb;
 
@@ -13,6 +12,20 @@ const getUsers = (req, res) => {
     .exec()
     .then((users) => {
       res.json(users);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+};
+
+const login = (req, res) => {
+  const { email, password } = req.body;
+  const docquery = User.find({ email: email, password: password }).read(ReadPreference.NEAREST);
+  docquery
+    .exec()
+    .then((users) => {
+      if (users.length === 0) res.status(401).send('Not Found');
+      res.send(users[0].communicationUserId);
     })
     .catch((err) => {
       res.status(500).send(err);
@@ -40,8 +53,9 @@ const getToken = async (req, res) => {
   const { uid } = req.body;
   const identityClient = new CommunicationIdentityClient(env.communicationString);
   let identityResponse = { communicationUserId: uid };
-  let tokenResponse = await identityClient.getToken(identityResponse, ['voip']);
-  res.json(tokenResponse.token);
+  let tokenResponseCall = await identityClient.getToken(identityResponse, ['voip']);
+  let tokenResponseChat = await identityClient.getToken(identityResponse, ['chat']);
+  res.json({ call: tokenResponseCall, chat: tokenResponseChat });
 };
 
-export { getUsers, createUsers, getToken };
+export { getUsers, createUsers, getToken, login };

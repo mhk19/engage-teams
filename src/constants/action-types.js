@@ -9,6 +9,7 @@ export const SPEAKER = 'SPEAKER';
 export const CAMERA = 'CAMERA';
 export const SET_DISPLAY_NAME = 'SET_DISPLAY_NAME';
 export const SET_LOCAL_USER_ID = 'SET_USER_ID';
+export const SET_TOKENS = 'SET_TOKENS';
 
 export const ADD_REMOTE_STREAM = 'ADD_REMOTE_STREAM';
 export const REMOVE_REMOTE_STREAM = 'REMOVE_REMOTE_STREAM';

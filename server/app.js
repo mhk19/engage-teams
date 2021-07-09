@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import { getUsers, createUsers, getToken } from './service.js';
+import { getUsers, createUsers, getToken, login } from './service.js';
 import cors from 'cors';
 
 const app = express();
@@ -13,7 +13,7 @@ const path = __dirname + '/views/';
 app.use(express.static(path));
 
 var corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: 'https://localhost:3001',
 };
 
 app.use(cors(corsOptions));
@@ -34,6 +34,10 @@ app.put('/user', (req, res) => {
 app.get('/token', (req, res) => {
   console.log('request in token');
   getToken(req, res);
+});
+
+app.get('/login', (req, res) => {
+  login(req, res);
 });
 
 export default app;

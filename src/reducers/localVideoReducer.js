@@ -8,6 +8,7 @@ import {
   CAMERA,
   SET_DISPLAY_NAME,
   SET_LOCAL_USER_ID,
+  SET_TOKENS,
 } from '../constants/action-types';
 
 const initialState = {
@@ -19,6 +20,8 @@ const initialState = {
   camera: '',
   displayName: '',
   userId: '',
+  callToken: '',
+  chatToken: '',
 };
 
 export default function localVideoReducer(state = initialState, action) {
@@ -75,6 +78,13 @@ export default function localVideoReducer(state = initialState, action) {
       return {
         ...state,
         userId: action.payload.userId,
+      };
+
+    case SET_TOKENS:
+      return {
+        ...state,
+        callToken: action.payload.callToken,
+        chatToken: action.payload.chatToken,
       };
 
     default:

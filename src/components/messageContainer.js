@@ -112,7 +112,8 @@ const MessageContainer = () => {
         }
       });
     });
-  }, []);
+    // eslint-disable-next-line
+  }, [chatClient]);
   const msgThreadStyles = {
     chatContainer: {
       backgroundColor: 'rgba(22, 135, 167, 0.15)',

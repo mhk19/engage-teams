@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as deviceManagementActions from '../actions/deviceActions';
-import { Dropdown, IDropdownOption } from '@fluentui/react';
+import { Dropdown } from '@fluentui/react';
 import '../styles/sidebar.css';
 
 const DeviceSettings = () => {
