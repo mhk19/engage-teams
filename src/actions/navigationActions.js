@@ -4,6 +4,7 @@ import {
   TAB_SETTINGS,
   TOGGLE_TAB_HOME,
   TAB_HOME,
+  TAB_AUTH,
 } from '../constants/action-types';
 
 export const ToggleParticipantTab = () => ({
@@ -24,4 +25,9 @@ export const ToggleNavHome = () => ({
 
 export const ToggleTabHome = () => ({
   type: TAB_HOME,
+});
+
+export const ToggleTabAuth = (data) => ({
+  type: TAB_AUTH,
+  payload: data,
 });

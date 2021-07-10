@@ -22,6 +22,7 @@ const VideoCall = () => {
   const remoteStore = useSelector((state) => state.remoteVideoUser);
   const navStore = useSelector((state) => state.navigation);
   const deviceStore = useSelector((state) => state.devices);
+  const homeStore = useSelector((state) => state.home);
   const dispatch = useDispatch();
   const rendererViewRef = useRef();
   const remoteRendererViewRef = useRef();
@@ -46,7 +47,7 @@ const VideoCall = () => {
     );
     const deviceManager = await callClient.getDeviceManager();
     deviceManagerRef.current = deviceManager;
-    const context = { groupId: '577d1801-2912-49c4-9e3e-b9672e9fc0c6' };
+    const context = { groupId: homeStore.groupId };
     const call = callAgent.join(context);
     callRef.current = call;
     const cameras = await deviceManager.getCameras();
@@ -217,9 +218,12 @@ const VideoCall = () => {
       </header>
       <div className="outer-video-container">
         {navStore.isParticipantListActive ? (
-          <Participants />
+          <Participants type="call" />
         ) : navStore.isChatActive ? (
-          <MessageContainer />
+          <div className=" call-sidebar sidebar">
+            <div className="call-sidebar-heading sidebar-heading">Chat</div>
+            <MessageContainer />
+          </div>
         ) : (
           <DeviceSettings />
         )}

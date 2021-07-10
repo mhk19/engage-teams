@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import NavBar from './components/navbar';
-// import VideoCall from './components/videocall';
+import VideoCall from './components/videocall';
 import HomePage from './components/home';
 import WelcomePage from './components/auth';
 import { getCookie } from './utils/handleCookies';
@@ -15,6 +15,7 @@ const App = () => {
   const dispatch = useDispatch();
   const localUserStore = useSelector((state) => state.localVideoUser);
   const navStore = useSelector((state) => state.navigation);
+  console.log(navStore);
   useEffect(() => {
     const id = getCookie('userid');
     console.log(localUserStore.callToken);
@@ -28,18 +29,20 @@ const App = () => {
         );
         if (localUserStore.userId === '') dispatch(localUserActions.SetUserId({ userId: id }));
         dispatch(navActions.ToggleNavHome());
+        dispatch(navActions.ToggleTabAuth({ isAuth: false }));
       });
     }
     // eslint-disable-next-line
   }, [localUserStore.userId]);
   return (
     <div className="App">
-      {localUserStore.userId !== '' && navStore.isHome ? <NavBar /> : null}
-      {localUserStore.userId === '' || !navStore.isHome ? (
+      {localUserStore.userId !== '' && !navStore.isAuth ? <NavBar /> : null}
+      {navStore.isAuth ? (
         <WelcomePage authtype={authType} setAuthType={setAuthType} />
-      ) : (
-        // <VideoCall />
+      ) : navStore.isHome ? (
         <HomePage />
+      ) : (
+        <VideoCall />
       )}
     </div>
   );

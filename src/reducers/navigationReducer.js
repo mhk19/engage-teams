@@ -4,6 +4,7 @@ import {
   TAB_SETTINGS,
   TOGGLE_TAB_HOME,
   TAB_HOME,
+  TAB_AUTH,
 } from '../constants/action-types';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   isSettingsActive: false,
   isHome: false,
   isHomeActive: true,
+  isAuth: true,
 };
 
 export default function navigationReducer(state = initialState, action) {
@@ -41,6 +43,7 @@ export default function navigationReducer(state = initialState, action) {
       };
 
     case TOGGLE_TAB_HOME:
+      console.log(state.isHome);
       return {
         ...state,
         isHome: !state.isHome,
@@ -51,6 +54,12 @@ export default function navigationReducer(state = initialState, action) {
       return {
         ...state,
         isHomeActive: !state.isHomeActive,
+      };
+
+    case TAB_AUTH:
+      return {
+        ...state,
+        isAuth: action.payload.isAuth,
       };
 
     default:

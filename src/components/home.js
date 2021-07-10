@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import '../styles/home.css';
 import * as userListActions from '../actions/participantListActions';
 import * as localUserActions from '../actions/localVideoUserActions';
+import * as navActions from '../actions/navigationActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../api/userApi';
 import Participants from './participantList';
@@ -9,6 +10,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import env from '../env/env';
 import MessageContainer from './messageContainer';
+import start_call from '../assets/images/start-call.svg';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -40,10 +42,23 @@ const HomePage = () => {
     });
     // eslint-disable-next-line
   }, []);
+  const handleJoinCall = () => {
+    console.log('clicked');
+    dispatch(navActions.ToggleNavHome());
+  };
   return (
     <div className="home-outer-container">
       {homeStore.isUserSelected ? (
-        <MessageContainer type="home" />
+        <div className="home-message-sidebar message-sidebar">
+          <div className="home-message-header">
+            <div className="home-message-header-back">{'< Back'}</div>
+            <div className="home-message-header-start">
+              <img src={start_call} className="start-call-img" />
+              <p onClick={handleJoinCall}>Start Call</p>
+            </div>
+          </div>
+          <MessageContainer type="home" />
+        </div>
       ) : (
         <div className="home-left">
           <div className="home-conversation">

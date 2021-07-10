@@ -17,9 +17,9 @@ const DeviceSettings = () => {
     dispatch(deviceManagementActions.SetSpeaker({ speaker: deviceStore.speakers[index] }));
   };
   return (
-    <div className="call-sidebar">
-      <div className="sidebar-heading">Settings</div>
-      <div className="list">
+    <div className="sidebar call-sidebar">
+      <div className="call-sidebar-heading sidebar-heading">Settings</div>
+      <div className="sidebar-list">
         <h3 className="secondary-heading">Select Microphone</h3>
         <Dropdown
           placeholder={deviceStore.microphone ? deviceStore.microphone.name : 'Select a Microphone'}

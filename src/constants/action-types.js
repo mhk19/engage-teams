@@ -23,6 +23,7 @@ export const TAB_CHAT = 'TAB_CHAT';
 export const TAB_SETTINGS = 'TAB_SETTINGS';
 export const TOGGLE_TAB_HOME = 'TOGGLE_TAB_HOME';
 export const TAB_HOME = 'TAB_HOME';
+export const TAB_AUTH = 'TAB_AUTH';
 
 export const ADD_PARTICIPANT = 'ADD_PARTICIPANT';
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ParticipantItem, ParticipantList } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
 import '../styles/sidebar.css';
 import PropTypes from 'prop-types';
 import { CreateConversation } from '../utils/conversation';
@@ -16,7 +15,7 @@ const Participants = (props) => {
     root: {
       backgroundColor: 'white',
       height: '2.5rem',
-      width: '20rem',
+      width: '25rem',
       borderRadius: '0.5rem',
       marginTop: '1rem',
       color: '#1687A7',
@@ -66,13 +65,11 @@ const Participants = (props) => {
       <div className={`${props.type}-sidebar-heading sidebar-heading`}>
         {props.type === 'home' ? 'Users' : 'Participants'}
       </div>
-      <div className="sidebar-list">
-        <Stack>
-          <ParticipantList
-            participants={participantStore.participants}
-            onRenderParticipant={onRenderParticipant}
-          />
-        </Stack>
+      <div className={`${props.type}-sidebar-list sidebar-list`}>
+        <ParticipantList
+          participants={participantStore.participants}
+          onRenderParticipant={onRenderParticipant}
+        />
       </div>
     </div>
   );

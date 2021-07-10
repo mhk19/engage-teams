@@ -3,9 +3,8 @@ import { FluentThemeProvider, MessageThread, SendBox } from '@azure/communicatio
 import '../styles/sidebar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as threadActions from '../actions/threadActions';
-import PropTypes from 'prop-types';
 
-const MessageContainer = (props) => {
+const MessageContainer = () => {
   const chatThreadClientRef = useRef();
   const localVideoUser = useSelector((state) => state.localVideoUser);
   const thread = useSelector((state) => state.thread);
@@ -78,8 +77,8 @@ const MessageContainer = (props) => {
   const msgThreadStyles = {
     chatContainer: {
       backgroundColor: 'rgba(22, 135, 167, 0.15)',
-      height: '32.5rem',
-      width: '25rem',
+      height: '100%',
+      width: '100%',
       marginTop: '3.5rem',
       overflowY: 'scroll',
       overflowX: 'hidden',
@@ -104,25 +103,18 @@ const MessageContainer = (props) => {
   };
 
   return (
-    <div className={`${props.type}-message-sidebar message-sidebar`}>
-      <FluentThemeProvider>
-        <div className={`${props.type}-sidebar-heading sidebar-heading`}>Chat</div>
-        <div className="chat">
-          <MessageThread
-            userId={'1'}
-            styles={msgThreadStyles}
-            messages={thread.messages}
-            showMessageDate={false}
-          />
-        </div>
-        <SendBox styles={sendBoxStyles} onSendMessage={sendMessage} />
-      </FluentThemeProvider>
-    </div>
+    <FluentThemeProvider>
+      <div className="chat">
+        <MessageThread
+          userId={'1'}
+          styles={msgThreadStyles}
+          messages={thread.messages}
+          showMessageDate={false}
+        />
+      </div>
+      <SendBox styles={sendBoxStyles} onSendMessage={sendMessage} />
+    </FluentThemeProvider>
   );
 };
 
 export default MessageContainer;
-
-MessageContainer.propTypes = {
-  type: PropTypes.string,
-};
