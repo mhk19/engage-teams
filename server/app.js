@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import { getUsers, createUsers, getToken, login } from './service.js';
+import { getUsers, createUsers, getToken, login, addGroup, findGroup } from './service.js';
 import cors from 'cors';
 
 const app = express();
@@ -36,6 +36,14 @@ app.get('/token', (req, res) => {
 
 app.get('/login', (req, res) => {
   login(req, res);
+});
+
+app.post('/addGroup', (req, res) => {
+  addGroup(req, res);
+});
+
+app.post('/findGroup', (req, res) => {
+  findGroup(req, res);
 });
 
 export default app;

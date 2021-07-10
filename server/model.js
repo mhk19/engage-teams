@@ -6,6 +6,7 @@ const userSchema = new Schema(
     email: String,
     password: String,
     communicationUserId: String,
+    groups: Array,
   },
   { autoIndex: true },
 );
