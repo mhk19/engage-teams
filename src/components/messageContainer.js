@@ -143,7 +143,7 @@ const MessageContainer = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="call-sidebar">
       <FluentThemeProvider>
         <div className="sidebar-heading">Chat</div>
         <div className="chat">

@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/home.css';
 import * as navActions from '../actions/navigationActions';
-import { useDispatch } from 'react-redux';
+import * as userListActions from '../actions/participantListActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../api/userApi';
+import Participants from './participantList';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  dispatch(navActions.ToggleNavHome());
+  const navStore = useSelector((state) => state.navigation);
+  useEffect(() => {
+    dispatch(navActions.ToggleNavHome());
+    getAllUsers().then((users) => {
+      users.forEach((user) => {
+        console.log(user);
+        dispatch(userListActions.AddParticipant({ user: user }));
+      });
+    });
+  }, []);
   return (
     <div className="home-outer-container">
       <div className="home-left">
@@ -20,6 +32,7 @@ const HomePage = () => {
           <button className="home-button-solid">Join Conversation</button>
         </div>
       </div>
+      <Participants type="home" />
     </div>
   );
 };

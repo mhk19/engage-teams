@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { ParticipantItem, ParticipantList } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import '../styles/sidebar.css';
+import PropTypes from 'prop-types';
 
-const Participants = () => {
+const Participants = (props) => {
   const participantStore = useSelector((state) => state.participantList);
 
   const participantStyle = {
@@ -25,18 +26,24 @@ const Participants = () => {
   };
 
   return (
-    <div className="sidebar">
-      <Stack>
-        <div className="sidebar-heading">Participants</div>
-        <div className="list">
+    <div className={`${props.type}-sidebar sidebar`}>
+      <div className={`${props.type}-sidebar-heading sidebar-heading`}>
+        {props.type === 'home' ? 'Users' : 'Participants'}
+      </div>
+      <div className="sidebar-list">
+        <Stack>
           <ParticipantList
             participants={participantStore.participants}
             onRenderParticipant={onRenderParticipant}
           />
-        </div>
-      </Stack>
+        </Stack>
+      </div>
     </div>
   );
 };
 
 export default Participants;
+
+Participants.propTypes = {
+  type: PropTypes.string,
+};

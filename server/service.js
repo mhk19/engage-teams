@@ -32,11 +32,11 @@ const login = (req, res) => {
 };
 
 const createUsers = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { displayName, email, password } = req.body;
   const identityClient = new CommunicationIdentityClient(env.communicationString);
   let identityResponse = await identityClient.createUser();
   const communicationUserId = identityResponse.communicationUserId;
-  const user = new User({ name, email, password, communicationUserId });
+  const user = new User({ displayName, email, password, communicationUserId });
   user
     .save()
     .then(() => {

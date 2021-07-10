@@ -2,15 +2,13 @@ import { axiosInstance } from './axiosInstance';
 import $ from 'jquery';
 import { CONFIG } from '../config/config';
 
-function login(email, password) {
-  return axiosInstance
-    .get('/login', { email: email, password: password })
-    .then((response) => {
-      return response.request.response;
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+async function login(email, password) {
+  try {
+    const response = await axiosInstance.get('/login', { email: email, password: password });
+    return response.request.response;
+  } catch (error) {
+    return await Promise.reject(error);
+  }
 }
 
 function getToken(uid) {
@@ -29,11 +27,20 @@ function register(name, email, password) {
   return $.ajax({
     method: 'PUT',
     url: `${CONFIG.serverURL}/user`,
-    data: { name: name, email: email, password: password },
+    data: { displayName: name, email: email, password: password },
     dataType: 'json',
   }).done((res) => {
     return res;
   });
 }
 
-export { login, getToken, register };
+async function getAllUsers() {
+  try {
+    const response = await axiosInstance.get('/users');
+    return JSON.parse(response.request.response);
+  } catch (error) {
+    return await Promise.reject(error);
+  }
+}
+
+export { login, getToken, register, getAllUsers };

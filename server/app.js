@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
   res.send('hello');
 });
 
-app.get('/user', (req, res) => {
+app.get('/users', (req, res) => {
   getUsers(req, res);
 });
 
