@@ -1,0 +1,69 @@
+.home-outer-container {
+  width: auto;
+  overflow-x: hidden;
+}
+
+.home-left {
+  position: absolute;
+  width: 60vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-conversation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-heading {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  color: #1687a7;
+}
+
+.home-input {
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  border: hidden;
+  padding: 0.5rem;
+  width: 15rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-bottom {
+  background: #f4f9f9;
+}
+
+.home-button-solid {
+  background: #1687a7;
+  border-radius: 0.5rem;
+  border: hidden;
+  color: #f4f9f9;
+  height: fit-content;
+  width: fit-content;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.home-or-bubble {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  background: #f4f9f9;
+  border-radius: 50px;
+  margin: 2rem;
+  color: #1687a7;
+  font-size: larger;
+}

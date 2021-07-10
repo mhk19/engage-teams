@@ -6,7 +6,7 @@ import { CommunicationIdentityClient } from '@azure/communication-identity';
 const { ReadPreference } = mongodb;
 
 const getUsers = (req, res) => {
-  const { email } = req.body;
+  const { email } = req.query;
   const docquery = User.find({ email: email }).read(ReadPreference.NEAREST);
   docquery
     .exec()
@@ -20,17 +20,14 @@ const getUsers = (req, res) => {
 
 const login = (req, res) => {
   const { email, password } = req.query;
-	console.log(email, password);
   const docquery = User.find({ email: email, password: password }).read(ReadPreference.NEAREST);
   docquery
     .exec()
     .then((users) => {
-	    console.log(users);
       if (users.length === 0) res.status(401).end('Not found');
-	    else res.json(users[0].communicationUserId);
+      else res.json(users[0].communicationUserId);
     })
     .catch((err) => {
-	console.log(err);
       res.status(500).end();
     });
 };
@@ -58,7 +55,6 @@ const getToken = async (req, res) => {
   let identityResponse = { communicationUserId: uid };
   let tokenResponseCall = await identityClient.getToken(identityResponse, ['voip']);
   let tokenResponseChat = await identityClient.getToken(identityResponse, ['chat']);
-	console.log(tokenResponseCall, tokenResponseChat);
   res.json({ call: tokenResponseCall, chat: tokenResponseChat });
 };
 

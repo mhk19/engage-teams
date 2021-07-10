@@ -1,4 +1,10 @@
-import { TAB_CHAT, TAB_PARTICIPANT, TAB_SETTINGS } from '../constants/action-types';
+import {
+  TAB_CHAT,
+  TAB_PARTICIPANT,
+  TAB_SETTINGS,
+  TOGGLE_TAB_HOME,
+  TAB_HOME,
+} from '../constants/action-types';
 
 export const ToggleParticipantTab = () => ({
   type: TAB_PARTICIPANT,
@@ -10,4 +16,12 @@ export const ToggleSettingsTab = () => ({
 
 export const ToggleChatTab = () => ({
   type: TAB_CHAT,
+});
+
+export const ToggleNavHome = () => ({
+  type: TOGGLE_TAB_HOME,
+});
+
+export const ToggleTabHome = () => ({
+  type: TAB_HOME,
 });

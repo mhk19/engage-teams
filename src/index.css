@@ -1,6 +1,7 @@
 body {
   margin: 0;
   overflow-y: hidden;
+  overflow-x: hidden;
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

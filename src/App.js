@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import NavBar from './components/navbar';
-import VideoCall from './components/videocall';
+// import VideoCall from './components/videocall';
+import HomePage from './components/home';
 import WelcomePage from './components/auth';
 import { getCookie } from './utils/handleCookies';
 import * as localUserActions from './actions/localVideoUserActions';
@@ -34,7 +35,8 @@ const App = () => {
       {localUserStore.userId === '' ? (
         <WelcomePage authtype={authType} setAuthType={setAuthType} />
       ) : (
-        <VideoCall />
+        // <VideoCall />
+        <HomePage />
       )}
     </div>
   );

@@ -19,8 +19,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
- 	console.log('request received');
-	res.send('hello');
+  res.send('hello');
 });
 
 app.get('/user', (req, res) => {
@@ -33,12 +32,10 @@ app.put('/user', (req, res) => {
 });
 
 app.get('/token', (req, res) => {
-  console.log('request in token');
   getToken(req, res);
 });
 
 app.get('/login', (req, res) => {
-	console.log('request received in login')
   login(req, res);
 });
 

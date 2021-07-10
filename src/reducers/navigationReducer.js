@@ -1,9 +1,17 @@
-import { TAB_CHAT, TAB_PARTICIPANT, TAB_SETTINGS } from '../constants/action-types';
+import {
+  TAB_CHAT,
+  TAB_PARTICIPANT,
+  TAB_SETTINGS,
+  TOGGLE_TAB_HOME,
+  TAB_HOME,
+} from '../constants/action-types';
 
 const initialState = {
   isParticipantListActive: true,
   isChatActive: false,
   isSettingsActive: false,
+  isHome: false,
+  isHomeActive: true,
 };
 
 export default function navigationReducer(state = initialState, action) {
@@ -30,6 +38,19 @@ export default function navigationReducer(state = initialState, action) {
         isChatActive: true,
         isParticipantListActive: false,
         isSettingsActive: false,
+      };
+
+    case TOGGLE_TAB_HOME:
+      return {
+        ...state,
+        isHome: !state.isHome,
+        isHomeActive: true,
+      };
+
+    case TAB_HOME:
+      return {
+        ...state,
+        isHomeActive: !state.isHomeActive,
       };
 
     default:

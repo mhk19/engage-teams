@@ -20,6 +20,8 @@ export const SET_REMOTE_USER_ID = 'SET_REMOTE_USER_ID';
 export const TAB_PARTICIPANT = 'TAB_PARTICIPANT';
 export const TAB_CHAT = 'TAB_CHAT';
 export const TAB_SETTINGS = 'TAB_SETTINGS';
+export const TOGGLE_TAB_HOME = 'TOGGLE_TAB_HOME';
+export const TAB_HOME = 'TAB_HOME';
 
 export const ADD_PARTICIPANT = 'ADD_PARTICIPANT';
 
