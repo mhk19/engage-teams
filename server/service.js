@@ -62,23 +62,28 @@ const addGroup = async (req, res) => {
   const docquery = User.find({ communicationUserId: uid }).read(ReadPreference.NEAREST);
   docquery
     .exec()
-    .then((users) => {
+    .then(async(users) => {
       const groups = users[0].groups;
       groups.push({ remoteUID: remoteUID, groupID: groupID, threadID: threadID });
       users[0].groups = groups;
-      users[0]
-        .save()
-        .then((savedDoc) => {
-          res.status(200).json(savedDoc);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).send(err);
-        });
+      await users[0].save();
     })
     .catch((err) => {
       res.status(500).end();
     });
+  const docquery2 = User.find({ communicationUserId: remoteUID }).read(ReadPreference.NEAREST);
+  docquery2
+    .exec()
+    .then(async(users) => {
+      const groups = users[0].groups;
+      groups.push({ remoteUID: uid, groupID: groupID, threadID: threadID });
+      users[0].groups = groups;
+      await users[0].save()
+    })
+    .catch((err) => {
+      res.status(500).end();
+    });
+  res.status(200).end();
 };
 
 const findGroup = async (req, res) => {
@@ -96,7 +101,7 @@ const findGroup = async (req, res) => {
           if (group.remoteUID === remoteUID) res.status(200).json(group);
         });
       } else {
-        res.status(200).send([]);
+        res.status(200).send();
       }
     })
     .catch((err) => {
