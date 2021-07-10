@@ -40,15 +40,10 @@ const VideoCall = () => {
       participantActions.AddParticipant({
         user: {
           userId: localStore.userId,
-          displayName: 'Mahak Gupta',
+          displayName: localStore.displayName,
         },
       }),
     );
-    // dispatch(
-    //   threadActions.SetThreadId({
-    //     threadId: '19:HTOg4V-bNfYPLgr0a2T70v5Hv367bdf1Nh0X15meWOg1@thread.v2',
-    //   }),
-    // );
     const deviceManager = await callClient.getDeviceManager();
     deviceManagerRef.current = deviceManager;
     const context = { groupId: '577d1801-2912-49c4-9e3e-b9672e9fc0c6' };

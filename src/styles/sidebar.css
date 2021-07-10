@@ -20,6 +20,12 @@
   width: 25vw;
 }
 
+.home-message-sidebar {
+  position: absolute;
+  left: 6rem;
+  top: 6rem;
+}
+
 .sidebar-heading {
   font-family: Poppins;
   font-style: normal;

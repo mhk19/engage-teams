@@ -3,12 +3,15 @@ import $ from 'jquery';
 import { CONFIG } from '../config/config';
 
 async function login(email, password) {
-  try {
-    const response = await axiosInstance.get('/login', { email: email, password: password });
-    return response.request.response;
-  } catch (error) {
-    return await Promise.reject(error);
-  }
+  return $.ajax({
+    method: 'GET',
+    url: `${CONFIG.serverURL}/login`,
+    data: { email: email, password: password },
+    dataType: 'json',
+  }).done((res) => {
+    console.log(res, 'hi');
+    return res.responseJSON;
+  });
 }
 
 function getToken(uid) {
@@ -43,4 +46,29 @@ async function getAllUsers() {
   }
 }
 
-export { login, getToken, register, getAllUsers };
+function getGroup(uid, remoteUID) {
+  return $.ajax({
+    method: 'GET',
+    url: `${CONFIG.serverURL}/findGroup`,
+    data: { uid: uid, remoteUID: remoteUID },
+    dataType: 'json',
+  }).done((res) => {
+    console.log(res, 'hi');
+    return res;
+  });
+}
+
+function addGroup(uid, remoteUID, groupID, threadID) {
+  console.log('reached here');
+  return $.ajax({
+    method: 'POST',
+    url: `${CONFIG.serverURL}/addGroup`,
+    data: { uid: uid, remoteUID: remoteUID, groupID: groupID, threadID: threadID },
+    dataType: 'json',
+  }).done((res) => {
+    console.log(res);
+    return res;
+  });
+}
+
+export { login, getToken, register, getAllUsers, getGroup, addGroup };

@@ -9,6 +9,7 @@ import {
   SET_DISPLAY_NAME,
   SET_LOCAL_USER_ID,
   SET_TOKENS,
+  SET_CHAT_CLIENT_REF,
 } from '../constants/action-types';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   userId: '',
   callToken: '',
   chatToken: '',
+  chatClientRef: null,
 };
 
 export default function localVideoReducer(state = initialState, action) {
@@ -85,6 +87,12 @@ export default function localVideoReducer(state = initialState, action) {
         ...state,
         callToken: action.payload.callToken,
         chatToken: action.payload.chatToken,
+      };
+
+    case SET_CHAT_CLIENT_REF:
+      return {
+        ...state,
+        chatClientRef: action.payload.chatClientRef,
       };
 
     default:

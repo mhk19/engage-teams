@@ -1,12 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ParticipantItem, ParticipantList } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import '../styles/sidebar.css';
 import PropTypes from 'prop-types';
+import { CreateConversation } from '../utils/conversation';
+import { SetSelectedUser } from '../actions/homeActions';
 
 const Participants = (props) => {
   const participantStore = useSelector((state) => state.participantList);
+  const localStore = useSelector((state) => state.localVideoUser);
+  const dispatch = useDispatch();
 
   const participantStyle = {
     root: {
@@ -21,11 +25,35 @@ const Participants = (props) => {
     },
   };
 
+  const handleUserClick = (participant) => {
+    if (props.type === 'home') {
+      CreateConversation(
+        localStore.userId,
+        localStore.displayName,
+        participant.userId,
+        participant.displayName,
+        localStore.chatClientRef,
+      )
+        .then((group) => {
+          dispatch(
+            SetSelectedUser({
+              selectedUserId: group.remoteID,
+              threadId: group.threadID,
+              groupId: group.groupID,
+            }),
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   const onRenderParticipant = (participant) => {
     return (
       <div
         onClick={() => {
-          console.log('clicked');
+          handleUserClick(participant);
         }}
       >
         <ParticipantItem displayName={participant.displayName} styles={participantStyle} />{' '}

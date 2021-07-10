@@ -4,6 +4,7 @@ import {
   ADD_MESSAGE,
   SET_THREAD_PARTICIPANTS,
   ADD_THREAD_PARTICIPANT,
+  ADD_MESSAGE_FRONT,
 } from '../constants/action-types';
 
 export const SetThreadId = (data) => ({
@@ -18,6 +19,11 @@ export const SetMessageHistory = (data) => ({
 
 export const AddMessage = (data) => ({
   type: ADD_MESSAGE,
+  payload: data,
+});
+
+export const AddMessageFront = (data) => ({
+  type: ADD_MESSAGE_FRONT,
   payload: data,
 });
 
