@@ -58,7 +58,7 @@ const getToken = async (req, res) => {
 };
 
 const addGroup = async (req, res) => {
-  const { uid, remoteUID, groupID, threadID } = req.query;
+  const { uid, remoteUID, groupID, threadID } = req.body;
   const docquery = User.find({ communicationUserId: uid }).read(ReadPreference.NEAREST);
   docquery
     .exec()

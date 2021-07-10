@@ -42,7 +42,7 @@ app.post('/addGroup', (req, res) => {
   addGroup(req, res);
 });
 
-app.post('/findGroup', (req, res) => {
+app.get('/findGroup', (req, res) => {
   findGroup(req, res);
 });
 
