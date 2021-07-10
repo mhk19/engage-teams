@@ -4,7 +4,7 @@ import { CONFIG } from '../config/config';
 
 function login(email, password) {
   return axiosInstance
-    .put('/login', { email: email, password: password })
+    .get('/login', { email: email, password: password })
     .then((response) => {
       return response.request.response;
     })
@@ -14,14 +14,15 @@ function login(email, password) {
 }
 
 function getToken(uid) {
-  return axiosInstance
-    .put('/token', { uid: uid })
-    .then((response) => {
-      return JSON.parse(response.request.response);
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+  return $.ajax({
+    method: 'GET',
+    url: `${CONFIG.serverURL}/token`,
+    data: { uid: uid },
+    dataType: 'json',
+  }).done((res) => {
+    console.log(res);
+    return res.responseJSON;
+  });
 }
 
 function register(name, email, password) {

@@ -28,8 +28,8 @@ const VideoCall = () => {
   const callRef = useRef();
   const deviceManagerRef = useRef();
   const joinCall = async () => {
-    const userToken =
-      'eyJhbGciOiJSUzI1NiIsImtpZCI6IjEwMiIsIng1dCI6IjNNSnZRYzhrWVNLd1hqbEIySmx6NTRQVzNBYyIsInR5cCI6IkpXVCJ9.eyJza3lwZWlkIjoiYWNzOmVjZTY2ZjY5LTEwMWQtNDVhYi05OTBjLTk2NDE1MjU1M2U2YV8wMDAwMDAwYi0yNDA0LTc2NDUtNTRiNy1hNDNhMGQwMGUzMzAiLCJzY3AiOjE3OTIsImNzaSI6IjE2MjU3MTQ1MTMiLCJleHAiOjE2MjU4MDA5MTMsImFjc1Njb3BlIjoidm9pcCIsInJlc291cmNlSWQiOiJlY2U2NmY2OS0xMDFkLTQ1YWItOTkwYy05NjQxNTI1NTNlNmEiLCJpYXQiOjE2MjU3MTQ1MTN9.iIgYq-Ywk0WvkE398kom0h_YJ_G9FjuEPe02kVfAIt3RuVRkfKhxnR0I01VCy6JNO_f9ZP5TfcrPuV7_SWbK0gqGSY0UVnrHS0_zatjWx1ImptCXHWrsKSij5X0Jr8GN0ZdW1tyQ8QbNobPboT0wC9F2afCzDziMa1HPIIcn6hc7n-A819S_Aqmp3fAn1uoB_v_c8pbMXD9lETOaGRkBNQF0WKMBT2qnuPTeGOY8S-tlO2ARBK4mgqCCnV39MZ3XvgmlnDBQEl1ixaLcLeIwuvmpjo4MZuKs_koCOCH2MYZ6P65JU57St5hTvL2bEqwfVnfouKklinHbLEoxzF4Ekg';
+    console.log(localStore.callToken);
+    const userToken = localStore.callToken;
     let callClient = new CallClient();
     const tokenCredential = new AzureCommunicationTokenCredential(userToken);
     const callAgent = await callClient.createCallAgent(tokenCredential, {
@@ -39,14 +39,9 @@ const VideoCall = () => {
     dispatch(
       participantActions.AddParticipant({
         user: {
-          userId: '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-2404-7645-54b7-a43a0d00e330',
+          userId: localStore.userId,
           displayName: 'Mahak Gupta',
         },
-      }),
-    );
-    dispatch(
-      localActions.SetUserId({
-        userId: '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-2404-7645-54b7-a43a0d00e330',
       }),
     );
     // dispatch(
@@ -163,9 +158,9 @@ const VideoCall = () => {
     }
   };
   useEffect(() => {
-    joinCall();
+    if (localStore.callToken !== '') joinCall();
     // eslint-disable-next-line
-  }, []);
+  }, [localStore.callToken]);
 
   useEffect(() => {
     if (deviceManagerRef.current) deviceManagement();

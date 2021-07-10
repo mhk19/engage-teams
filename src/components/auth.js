@@ -29,7 +29,7 @@ const WelcomePage = (props) => {
   const handleLogin = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    console.log('reached here');
+    console.log('reached here', email, password);
     if (email === '' || password === '') alert('Please fill all the fields');
     else {
       login(email, password).then((res) => {
@@ -48,51 +48,51 @@ const WelcomePage = (props) => {
     props.setAuthType('Login');
   };
   return (
-    <div className="outer-container">
-      <div className="header">
-        <p className="welcome">Welcome!</p>
-        <img className="logo" src={logo} alt="logo" />
+    <div className="auth-outer-container">
+      <div className="auth-header">
+        <p className="auth-welcome">Welcome!</p>
+        <img className="auth-logo" src={logo} alt="logo" />
       </div>
       {props.authtype === 'Register' ? (
-        <h1 className="heading">Register</h1>
+        <h1 className="auth-heading">Register</h1>
       ) : (
-        <h1 className="heading">Login</h1>
+        <h1 className="auth-heading">Login</h1>
       )}
       {props.authtype === 'Register' ? (
-        <div className="input-container">
-          <img className="icon" src={social} alt="icon" />
-          <input className="input" placeholder="Name" id="name" />
+        <div className="auth-input-container">
+          <img className="auth-icon" src={social} alt="icon" />
+          <input className="auth-input" placeholder="Name" id="name" />
         </div>
       ) : null}
-      <div className="input-container">
-        <img className="icon" src={email} alt="icon" />
-        <input className="input" placeholder="Email" id="email" />
+      <div className="auth-input-container">
+        <img className="auth-icon" src={email} alt="icon" />
+        <input className="auth-input" placeholder="Email" id="email" />
       </div>
-      <div className="input-container">
-        <img className="icon" src={password} alt="icon" />
-        <input className="input" type="password" placeholder="Password" id="password" />
+      <div className="auth-input-container">
+        <img className="auth-icon" src={password} alt="icon" />
+        <input className="auth-input" type="password" placeholder="Password" id="password" />
       </div>
-      <div className="footer">
+      <div className="auth-footer">
         {props.authtype === 'Register' ? (
-          <button className="button-solid" onClick={handleRegister}>
+          <button className="auth-button-solid" onClick={handleRegister}>
             Register
           </button>
         ) : (
-          <button className="button-solid" onClick={handleLogin}>
+          <button className="auth-button-solid" onClick={handleLogin}>
             Login
           </button>
         )}
         {props.authtype === 'Login' ? (
-          <div className="footer-right">
-            <p className="graytext">Don&apost have an account?</p>
-            <p className="text-button" onClick={switchToRegister}>
+          <div className="auth-footer-right">
+            <p className="auth-graytext">Don&apost have an account?</p>
+            <p className="auth-text-button" onClick={switchToRegister}>
               Register here
             </p>
           </div>
         ) : (
-          <div className="footer-right">
-            <p className="graytext">Already have an account?</p>
-            <p className="text-button" onClick={switchToLogin}>
+          <div className="auth-footer-right">
+            <p className="auth-graytext">Already have an account?</p>
+            <p className="auth-text-button" onClick={switchToLogin}>
               Login here
             </p>
           </div>
