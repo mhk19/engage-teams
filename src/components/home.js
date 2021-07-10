@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import '../styles/home.css';
 import * as navActions from '../actions/navigationActions';
 import * as userListActions from '../actions/participantListActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../api/userApi';
 import Participants from './participantList';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const navStore = useSelector((state) => state.navigation);
   useEffect(() => {
     dispatch(navActions.ToggleNavHome());
     getAllUsers().then((users) => {
@@ -17,6 +16,7 @@ const HomePage = () => {
         dispatch(userListActions.AddParticipant({ user: user }));
       });
     });
+    // eslint-disable-next-line
   }, []);
   return (
     <div className="home-outer-container">

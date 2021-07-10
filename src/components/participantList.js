@@ -22,7 +22,15 @@ const Participants = (props) => {
   };
 
   const onRenderParticipant = (participant) => {
-    return <ParticipantItem displayName={participant.displayName} styles={participantStyle} />;
+    return (
+      <div
+        onClick={() => {
+          console.log('clicked');
+        }}
+      >
+        <ParticipantItem displayName={participant.displayName} styles={participantStyle} />{' '}
+      </div>
+    );
   };
 
   return (

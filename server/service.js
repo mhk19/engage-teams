@@ -64,35 +64,44 @@ const addGroup = async (req, res) => {
     .exec()
     .then((users) => {
       const groups = users[0].groups;
-      groups.push({remoteUID: remoteUID, groupID: groupID, threadID: threadID});
+      groups.push({ remoteUID: remoteUID, groupID: groupID, threadID: threadID });
       users[0].groups = groups;
-      users[0].save().then((savedDoc) => {
-        res.status(200).json(savedDoc);
-      }).catch((err) => {
-        console.log(err);
-        res.status(500).send(err);
-      })
+      users[0]
+        .save()
+        .then((savedDoc) => {
+          res.status(200).json(savedDoc);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        });
     })
     .catch((err) => {
       res.status(500).end();
     });
-}
+};
 
 const findGroup = async (req, res) => {
   const { uid, remoteUID } = req.query;
-  const docquery = User.find({ communicationUserId: uid, groups: {$elemMatch: {remoteUID: remoteUID}}});
-  docquery.exec().then((users) => {
-    if (users.length !== 0){
-      const groups = users[0].groups;
-      groups.forEach((group) => {
-        if (group.remoteUID === remoteUID) res.status(200).json(group);
-      })
-    } else {
-      res.status(200).send([]);
-    }
-  }).catch((err) => {
-    res.status(500).end();
-  })
-}
+  const docquery = User.find({
+    communicationUserId: uid,
+    groups: { $elemMatch: { remoteUID: remoteUID } },
+  });
+  docquery
+    .exec()
+    .then((users) => {
+      if (users.length !== 0) {
+        const groups = users[0].groups;
+        groups.forEach((group) => {
+          if (group.remoteUID === remoteUID) res.status(200).json(group);
+        });
+      } else {
+        res.status(200).send([]);
+      }
+    })
+    .catch((err) => {
+      res.status(500).end();
+    });
+};
 
 export { getUsers, createUsers, getToken, login, addGroup, findGroup };
