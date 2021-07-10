@@ -8,42 +8,33 @@ import * as localUserActions from './actions/localVideoUserActions';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userFunctions from './api/userApi';
 
-// const mapStateToProps = state => {
-//   return {
-//     user: state.user,
-//   };
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     getUser: () => getUser(dispatch),
-//   };
-// }
-
 const App = () => {
   const [authType, setAuthType] = useState('Register');
   const dispatch = useDispatch();
   const localUserStore = useSelector((state) => state.localVideoUser);
   useEffect(() => {
     const id = getCookie('userid');
-    if (id) {
-      const tokens = userFunctions.getToken(id);
-      dispatch(localUserActions.SetUserId({ userId: id }));
-      dispatch(
-        localUserActions.SetTokens({ callToken: tokens.callToken, chatToken: token.chatToken }),
-      );
+    console.log(localUserStore.callToken);
+    if (id && localUserStore.callToken === '') {
+      userFunctions.getToken(id).then((tokens) => {
+        dispatch(
+          localUserActions.SetTokens({
+            callToken: tokens.call.token,
+            chatToken: tokens.chat.token,
+          }),
+        );
+      });
+      if (localUserStore.userId === '') dispatch(localUserActions.SetUserId({ userId: id }));
     }
     // eslint-disable-next-line
   }, [localUserStore.userId]);
   return (
     <div className="App">
+      {localUserStore.userId !== '' ? <NavBar /> : null}
       {localUserStore.userId === '' ? (
         <WelcomePage authtype={authType} setAuthType={setAuthType} />
       ) : (
-        <div>
-          <NavBar />
-          <VideoCall />
-        </div>
+        <VideoCall />
       )}
     </div>
   );

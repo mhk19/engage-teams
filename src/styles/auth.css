@@ -1,4 +1,4 @@
-.outer-container {
+.auth-outer-container {
   position: relative;
   width: 30vw;
   height: 60vh;
@@ -9,14 +9,14 @@
   border-radius: 12px;
 }
 
-.header {
+.auth-header {
   display: flex;
   flex-direction: row;
   padding-left: 2.5rem;
   padding-top: 1rem;
 }
 
-.welcome {
+.auth-welcome {
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
@@ -24,12 +24,12 @@
   font-size: 1.5rem;
 }
 
-.logo {
+.auth-logo {
   position: absolute;
   right: 3rem;
 }
 
-.heading {
+.auth-heading {
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
@@ -38,13 +38,13 @@
   margin-top: 0%;
 }
 
-.input-container {
+.auth-input-container {
   display: flex;
   flex-direction: row;
   padding-left: 2.5rem;
 }
 
-.input {
+.auth-input {
   position: relative;
   width: 75%;
   height: 1.75rem;
@@ -61,14 +61,14 @@ input::placeholder {
   font-size: 1rem;
 }
 
-.footer {
+.auth-footer {
   display: flex;
   flex-direction: row;
   margin-top: 2rem;
   padding-left: 5.9rem;
 }
 
-.button-solid {
+.auth-button-solid {
   background: #1687a7;
   border-radius: 0.5rem;
   border: hidden;
@@ -80,7 +80,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.footer-right {
+.auth-footer-right {
   position: absolute;
   font-size: 0.8rem;
   line-height: 0.2rem;
@@ -88,11 +88,11 @@ input::placeholder {
   padding: 0.4rem;
 }
 
-.graytext {
+.auth-graytext {
   color: #a1a1a1;
 }
 
-.text-button {
+.auth-text-button {
   color: #1687a7;
   cursor: pointer;
 }
