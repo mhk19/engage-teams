@@ -6,6 +6,7 @@ import navigationReducer from '../reducers/navigationReducer';
 import participantReducer from '../reducers/participantReducer';
 import deviceReducer from '../reducers/deviceReducer';
 import threadReducer from '../reducers/threadReducer';
+import homeReducer from '../reducers/homeReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   participantList: participantReducer,
   devices: deviceReducer,
   thread: threadReducer,
+  home: homeReducer,
 });
 
 const store = createStore(rootReducer);

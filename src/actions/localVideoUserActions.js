@@ -9,6 +9,7 @@ import {
   SET_DISPLAY_NAME,
   SET_LOCAL_USER_ID,
   SET_TOKENS,
+  SET_CHAT_CLIENT_REF,
 } from '../constants/action-types';
 
 export const AddLocalStream = (data) => ({
@@ -56,5 +57,10 @@ export const SetUserId = (data) => ({
 
 export const SetTokens = (data) => ({
   type: SET_TOKENS,
+  payload: data,
+});
+
+export const SetChatClientRef = (data) => ({
+  type: SET_CHAT_CLIENT_REF,
   payload: data,
 });

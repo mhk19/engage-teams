@@ -62,7 +62,7 @@ const addGroup = async (req, res) => {
   const docquery = User.find({ communicationUserId: uid }).read(ReadPreference.NEAREST);
   docquery
     .exec()
-    .then(async(users) => {
+    .then(async (users) => {
       const groups = users[0].groups;
       groups.push({ remoteUID: remoteUID, groupID: groupID, threadID: threadID });
       users[0].groups = groups;
@@ -74,11 +74,11 @@ const addGroup = async (req, res) => {
   const docquery2 = User.find({ communicationUserId: remoteUID }).read(ReadPreference.NEAREST);
   docquery2
     .exec()
-    .then(async(users) => {
+    .then(async (users) => {
       const groups = users[0].groups;
       groups.push({ remoteUID: uid, groupID: groupID, threadID: threadID });
       users[0].groups = groups;
-      await users[0].save()
+      await users[0].save();
     })
     .catch((err) => {
       res.status(500).end();

@@ -4,6 +4,7 @@ import {
   ADD_MESSAGE,
   SET_THREAD_PARTICIPANTS,
   ADD_THREAD_PARTICIPANT,
+  ADD_MESSAGE_FRONT,
 } from '../constants/action-types';
 
 const initialState = {
@@ -32,6 +33,14 @@ export default function threadReducer(state = initialState, action) {
       return {
         ...state,
         messages: newMessages,
+      };
+
+    case ADD_MESSAGE_FRONT:
+      const messages_u = state.messages;
+      messages_u.unshift(action.payload.message);
+      return {
+        ...state,
+        messages: messages_u,
       };
 
     case SET_THREAD_PARTICIPANTS:

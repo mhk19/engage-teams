@@ -1,45 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { FluentThemeProvider, MessageThread, SendBox } from '@azure/communication-react';
 import '../styles/sidebar.css';
-import { ChatClient } from '@azure/communication-chat';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import env from '../env/env';
 import { useDispatch, useSelector } from 'react-redux';
 import * as threadActions from '../actions/threadActions';
+import PropTypes from 'prop-types';
 
-const MessageContainer = () => {
+const MessageContainer = (props) => {
   const chatThreadClientRef = useRef();
   const localVideoUser = useSelector((state) => state.localVideoUser);
   const thread = useSelector((state) => state.thread);
   const dispatch = useDispatch();
-  const userToken = env.chatToken;
-  let chatClient = new ChatClient(
-    env.endpointUrl,
-    new AzureCommunicationTokenCredential(userToken),
-  );
-  const createChatThread = async () => {
-    const createChatThreadRequest = {
-      topic: 'Meeting Chat',
-    };
-
-    const createChatThreadOptions = {
-      participants: [
-        {
-          id: {
-            communicationUserId:
-              '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-26b8-7380-6a0b-343a0d001cc3',
-          },
-          displayName: 'Mahak',
-        },
-      ],
-    };
-    const createChatThreadResult = await chatClient.createChatThread(
-      createChatThreadRequest,
-      createChatThreadOptions,
-    );
-    const threadId = createChatThreadResult.chatThread.id;
-    return threadId;
-  };
+  const homeStore = useSelector((state) => state.home);
 
   const sendMessage = async (content) => {
     const sendMessageRequest = {
@@ -57,63 +28,53 @@ const MessageContainer = () => {
     console.log(`Message sent!, message id:${messageId}`);
   };
 
-  useEffect(() => {
-    createChatThread().then(async (threadId) => {
-      console.log(threadId);
-      let chatThreadClient = chatClient.getChatThreadClient(threadId);
-      chatThreadClientRef.current = chatThreadClient;
-      const addParticipantsRequest = {
-        participants: [
-          {
-            id: {
-              communicationUserId:
-                '8:acs:ece66f69-101d-45ab-990c-964152553e6a_0000000b-2504-1949-ac00-343a0d0024b3',
-            },
-            displayName: 'Jane',
+  const initialiseThread = async () => {
+    const chatClient = localVideoUser.chatClientRef.current;
+    let chatThreadClient = chatClient.getChatThreadClient(homeStore.threadId);
+    chatThreadClientRef.current = chatThreadClient;
+    const messages = chatThreadClient.listMessages();
+    for await (const message of messages) {
+      if (message.type === 'text') {
+        const msg = {
+          type: 'chat',
+          payload: {
+            senderId: message.sender.communicationUserId,
+            senderDisplayName: message.senderDisplayName,
+            messageId: message.id,
+            content: message.content.message,
+            attached: false,
+            type: 'text',
           },
-        ],
-      };
-      await chatThreadClient.addParticipants(addParticipantsRequest);
-      const messages = chatThreadClient.listMessages();
-      for await (const message of messages) {
-        if (message.type === 'text') {
-          const msg = {
-            type: 'chat',
-            payload: {
-              senderId: message.sender.communicationUserId,
-              senderDisplayName: message.senderDisplayName,
-              messageId: message.id,
-              content: message.content.message,
-              attached: false,
-              type: 'text',
-            },
-          };
-          dispatch(threadActions.AddMessage({ message: msg }));
-        }
-        console.log(message);
+        };
+        dispatch(threadActions.AddMessageFront({ message: msg }));
       }
-      await chatClient.startRealtimeNotifications();
-      chatClient.on('chatMessageReceived', (e) => {
-        console.log('Notification chatMessageReceived!', e);
-        if (e.type === 'Text') {
-          const msg = {
-            type: 'chat',
-            payload: {
-              senderId: e.sender.communicationUserId,
-              senderDisplayName: e.senderDisplayName,
-              messageId: e.id,
-              content: e.message,
-              attached: false,
-              type: 'text',
-            },
-          };
-          dispatch(threadActions.AddMessage({ message: msg }));
-          console.log(thread.messages);
-        }
-      });
+      console.log(message);
+    }
+    await chatClient.startRealtimeNotifications();
+    chatClient.on('chatMessageReceived', (e) => {
+      console.log('Notification chatMessageReceived!', e);
+      if (e.type === 'Text') {
+        const msg = {
+          type: 'chat',
+          payload: {
+            senderId: e.sender.communicationUserId,
+            senderDisplayName: e.senderDisplayName,
+            messageId: e.id,
+            content: e.message,
+            attached: false,
+            type: 'text',
+          },
+        };
+        dispatch(threadActions.AddMessage({ message: msg }));
+        console.log(thread.messages);
+      }
     });
+  };
+
+  useEffect(() => {
+    initialiseThread();
     // eslint-disable-next-line
-  }, [chatClient]);
+  }, []);
   const msgThreadStyles = {
     chatContainer: {
       backgroundColor: 'rgba(22, 135, 167, 0.15)',
@@ -143,9 +104,9 @@ const MessageContainer = () => {
   };
 
   return (
-    <div className="call-sidebar">
+    <div className={`${props.type}-message-sidebar message-sidebar`}>
       <FluentThemeProvider>
-        <div className="sidebar-heading">Chat</div>
+        <div className={`${props.type}-sidebar-heading sidebar-heading`}>Chat</div>
         <div className="chat">
           <MessageThread
             userId={'1'}
@@ -161,3 +122,7 @@ const MessageContainer = () => {
 };
 
 export default MessageContainer;
+
+MessageContainer.propTypes = {
+  type: PropTypes.string,
+};
