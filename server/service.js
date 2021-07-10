@@ -6,8 +6,7 @@ import { CommunicationIdentityClient } from '@azure/communication-identity';
 const { ReadPreference } = mongodb;
 
 const getUsers = (req, res) => {
-  const { email } = req.query;
-  const docquery = User.find({ email: email }).read(ReadPreference.NEAREST);
+  const docquery = User.find().read(ReadPreference.NEAREST);
   docquery
     .exec()
     .then((users) => {

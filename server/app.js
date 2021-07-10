@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
-  console.log('request in users');
   getUsers(req, res);
 });
 
