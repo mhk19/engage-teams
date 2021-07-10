@@ -13,13 +13,14 @@ const path = __dirname + '/views/';
 app.use(express.static(path));
 
 var corsOptions = {
-  origin: 'https://localhost:3001',
+  origin: '*',
 };
 
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.sendFile(path + 'index.html');
+ 	console.log('request received');
+	res.send('hello');
 });
 
 app.get('/user', (req, res) => {
@@ -37,6 +38,7 @@ app.get('/token', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+	console.log('request received in login')
   login(req, res);
 });
 

@@ -19,16 +19,19 @@ const getUsers = (req, res) => {
 };
 
 const login = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.query;
+	console.log(email, password);
   const docquery = User.find({ email: email, password: password }).read(ReadPreference.NEAREST);
   docquery
     .exec()
     .then((users) => {
-      if (users.length === 0) res.status(401).send('Not Found');
-      res.send(users[0].communicationUserId);
+	    console.log(users);
+      if (users.length === 0) res.status(401).end('Not found');
+	    else res.json(users[0].communicationUserId);
     })
     .catch((err) => {
-      res.status(500).send(err);
+	console.log(err);
+      res.status(500).end();
     });
 };
 
@@ -41,7 +44,7 @@ const createUsers = async (req, res) => {
   user
     .save()
     .then(() => {
-      res.json(user);
+      res.status(200).json(user);
     })
     .catch((err) => {
       console.log(err);
@@ -50,11 +53,12 @@ const createUsers = async (req, res) => {
 };
 
 const getToken = async (req, res) => {
-  const { uid } = req.body;
+  const { uid } = req.query;
   const identityClient = new CommunicationIdentityClient(env.communicationString);
   let identityResponse = { communicationUserId: uid };
   let tokenResponseCall = await identityClient.getToken(identityResponse, ['voip']);
   let tokenResponseChat = await identityClient.getToken(identityResponse, ['chat']);
+	console.log(tokenResponseCall, tokenResponseChat);
   res.json({ call: tokenResponseCall, chat: tokenResponseChat });
 };
 
