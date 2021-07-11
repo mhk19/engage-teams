@@ -58,7 +58,11 @@ const MessageContainer = (props) => {
     await chatClient.startRealtimeNotifications();
     chatClient.on('chatMessageReceived', (e) => {
       console.log('Notification chatMessageReceived!', e);
-      if (e.type === 'Text' && e.sender.communicationUserId === homeStore.selectedUserId) {
+      if (
+        e.type === 'Text' &&
+        (e.sender.communicationUserId === homeStore.selectedUserId ||
+          e.sender.communicationUserId === localVideoUser.userId)
+      ) {
         const msg = {
           type: 'chat',
           payload: {
