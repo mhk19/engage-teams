@@ -3,8 +3,9 @@ import { FluentThemeProvider, MessageThread, SendBox } from '@azure/communicatio
 import '../styles/sidebar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as threadActions from '../actions/threadActions';
+import PropTypes from 'prop-types';
 
-const MessageContainer = () => {
+const MessageContainer = (props) => {
   const chatThreadClientRef = useRef();
   const localVideoUser = useSelector((state) => state.localVideoUser);
   const thread = useSelector((state) => state.thread);
@@ -34,6 +35,9 @@ const MessageContainer = () => {
     const messages = chatThreadClient.listMessages();
     for await (const message of messages) {
       if (message.type === 'text') {
+        let mine = false;
+        if (props.type === 'home' && message.sender.communicationUserId === localVideoUser.userId)
+          mine = true;
         const msg = {
           type: 'chat',
           payload: {
@@ -43,6 +47,8 @@ const MessageContainer = () => {
             content: message.content.message,
             attached: false,
             type: 'text',
+            createdOn: message.createdOn,
+            mine: mine,
           },
         };
         dispatch(threadActions.AddMessageFront({ message: msg }));
@@ -62,6 +68,7 @@ const MessageContainer = () => {
             content: e.message,
             attached: false,
             type: 'text',
+            createdOn: e.createdOn,
           },
         };
         dispatch(threadActions.AddMessage({ message: msg }));
@@ -74,7 +81,6 @@ const MessageContainer = () => {
     console.log(thread.threadId);
     dispatch(threadActions.ResetThread());
     initialiseThread();
-    // return dispatch(threadActions.ResetThread());
     // eslint-disable-next-line
   }, [homeStore]);
   const msgThreadStyles = {
@@ -121,3 +127,7 @@ const MessageContainer = () => {
 };
 
 export default MessageContainer;
+
+MessageContainer.propTypes = {
+  type: PropTypes.string,
+};

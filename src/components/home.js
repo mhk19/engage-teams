@@ -61,9 +61,9 @@ const HomePage = () => {
             <div className="home-message-header-back" onClick={handleBackButton}>
               {'< Back'}
             </div>
-            <div className="home-message-header-start">
+            <div className="home-message-header-start" onClick={handleJoinCall}>
               <img src={start_call} className="start-call-img" />
-              <p onClick={handleJoinCall}>Start Call</p>
+              <p>Start Call</p>
             </div>
           </div>
           <MessageContainer type="home" />
