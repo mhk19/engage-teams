@@ -78,14 +78,16 @@ const MessageContainer = (props) => {
 
   const sendBoxStyles = {
     textField: {
-      background: '#F4F9F9',
+      background: '#fcfdfd',
       border: 'none',
       borderRadius: '0 0 0 0.75rem',
       height: '2.5rem',
+      border: '1px solid rgba(22, 135, 167, 0.15)',
     },
     sendMessageIconContainer: {
-      background: '#F4F9F9',
+      background: '#fcfdfd',
       borderRadius: '0 0 0.75rem 0',
+      border: '1px solid rgba(22, 135, 167, 0.15)',
     },
   };
 
@@ -96,7 +98,7 @@ const MessageContainer = (props) => {
           userId={'1'}
           styles={msgThreadStyles}
           messages={thread.messages}
-          showMessageDate={false}
+          showMessageDate={true}
         />
       </div>
       <SendBox styles={sendBoxStyles} onSendMessage={sendMessage} />

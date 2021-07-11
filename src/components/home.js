@@ -19,7 +19,6 @@ const HomePage = () => {
   const chatClientRef = useRef();
   const localStore = useSelector((state) => state.localVideoUser);
   const homeStore = useSelector((state) => state.home);
-  const navStore = useSelector((state) => state.navigation);
 
   const subscribe = async () => {
     const chatClient = chatClientRef.current;

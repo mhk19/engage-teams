@@ -7,7 +7,6 @@ import * as deviceManagementActions from '../actions/deviceActions';
 import * as navActions from '../actions/navigationActions';
 import * as homeActions from '../actions/homeActions';
 import Participants from './participantList';
-import copy from '../assets/images/copy.svg';
 import mic from '../assets/images/mic.svg';
 import mute_mic from '../assets/images/mute_mic.svg';
 import video from '../assets/images/video.svg';
