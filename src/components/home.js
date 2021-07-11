@@ -4,6 +4,7 @@ import * as userListActions from '../actions/participantListActions';
 import * as localUserActions from '../actions/localVideoUserActions';
 import * as navActions from '../actions/navigationActions';
 import * as homeActions from '../actions/homeActions';
+import * as threadActions from '../actions/threadActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../api/userApi';
 import Participants from './participantList';
@@ -18,6 +19,35 @@ const HomePage = () => {
   const chatClientRef = useRef();
   const localStore = useSelector((state) => state.localVideoUser);
   const homeStore = useSelector((state) => state.home);
+  const navStore = useSelector((state) => state.navigation);
+
+  const subscribe = async () => {
+    const chatClient = chatClientRef.current;
+    await chatClient.startRealtimeNotifications();
+    chatClient.on('chatMessageReceived', (e) => {
+      console.log('Notification chatMessageReceived!', e);
+      if (
+        e.type === 'Text' &&
+        (e.sender.communicationUserId === homeStore.selectedUserId ||
+          e.sender.communicationUserId === localStore.userId)
+      ) {
+        const msg = {
+          type: 'chat',
+          payload: {
+            senderId: e.sender.communicationUserId,
+            senderDisplayName: e.senderDisplayName,
+            messageId: e.id,
+            content: e.message,
+            attached: false,
+            type: 'text',
+            createdOn: e.createdOn,
+          },
+        };
+        dispatch(threadActions.AddMessage({ message: msg }));
+        console.log(thread.messages);
+      }
+    });
+  };
 
   useEffect(() => {
     dispatch(userListActions.ResetParticipant());
@@ -42,6 +72,7 @@ const HomePage = () => {
         }
       });
     });
+    subscribe();
     // eslint-disable-next-line
   }, []);
   const handleJoinCall = () => {

@@ -219,12 +219,6 @@ const VideoCall = () => {
 
   return (
     <div className="outer-container">
-      <header className="header">
-        <p className="light-text">Meeting Code: </p>
-        <p className="dark-text">x3yw-hg7u</p>
-        <img className="text-icon" src={copy} alt="copy" />
-        <p className="time-text">00:45</p>
-      </header>
       <div className="outer-video-container">
         {navStore.isParticipantListActive ? (
           <Participants type="call" />

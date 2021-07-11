@@ -38,7 +38,7 @@ const Participants = (props) => {
         .then((group) => {
           dispatch(
             SetSelectedUser({
-              selectedUserId: group.remoteID,
+              remoteUID: group.remoteUID,
               threadId: group.threadID,
               groupId: group.groupID,
             }),

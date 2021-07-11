@@ -11,6 +11,7 @@ const MessageContainer = (props) => {
   const thread = useSelector((state) => state.thread);
   const dispatch = useDispatch();
   const homeStore = useSelector((state) => state.home);
+  const navStore = useSelector((state) => state.navigation);
 
   const sendMessage = async (content) => {
     const sendMessageRequest = {
@@ -26,6 +27,7 @@ const MessageContainer = (props) => {
     );
     const messageId = sendChatMessageResult.id;
     console.log(`Message sent!, message id:${messageId}`);
+    console.log(navStore.isHome);
   };
 
   const initialiseThread = async () => {
@@ -35,9 +37,6 @@ const MessageContainer = (props) => {
     const messages = chatThreadClient.listMessages();
     for await (const message of messages) {
       if (message.type === 'text') {
-        let mine = false;
-        if (props.type === 'home' && message.sender.communicationUserId === localVideoUser.userId)
-          mine = true;
         const msg = {
           type: 'chat',
           payload: {
@@ -48,37 +47,12 @@ const MessageContainer = (props) => {
             attached: false,
             type: 'text',
             createdOn: message.createdOn,
-            mine: mine,
           },
         };
         dispatch(threadActions.AddMessageFront({ message: msg }));
       }
       console.log(message);
     }
-    await chatClient.startRealtimeNotifications();
-    chatClient.on('chatMessageReceived', (e) => {
-      console.log('Notification chatMessageReceived!', e);
-      if (
-        e.type === 'Text' &&
-        (e.sender.communicationUserId === homeStore.selectedUserId ||
-          e.sender.communicationUserId === localVideoUser.userId)
-      ) {
-        const msg = {
-          type: 'chat',
-          payload: {
-            senderId: e.sender.communicationUserId,
-            senderDisplayName: e.senderDisplayName,
-            messageId: e.id,
-            content: e.message,
-            attached: false,
-            type: 'text',
-            createdOn: e.createdOn,
-          },
-        };
-        dispatch(threadActions.AddMessage({ message: msg }));
-        console.log(thread.messages);
-      }
-    });
   };
 
   useEffect(() => {
