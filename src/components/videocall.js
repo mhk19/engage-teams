@@ -4,6 +4,8 @@ import * as remoteActions from '../actions/remoteVideoUserActions';
 import * as localActions from '../actions/localVideoUserActions';
 import * as participantActions from '../actions/participantListActions';
 import * as deviceManagementActions from '../actions/deviceActions';
+import * as navActions from '../actions/navigationActions';
+import * as homeActions from '../actions/homeActions';
 import Participants from './participantList';
 import copy from '../assets/images/copy.svg';
 import mic from '../assets/images/mic.svg';
@@ -26,17 +28,16 @@ const VideoCall = () => {
   const dispatch = useDispatch();
   const rendererViewRef = useRef();
   const remoteRendererViewRef = useRef();
+  const localRendererRef = useRef();
   const callRef = useRef();
   const deviceManagerRef = useRef();
   const joinCall = async () => {
-    console.log(localStore.callToken);
     const userToken = localStore.callToken;
     let callClient = new CallClient();
     const tokenCredential = new AzureCommunicationTokenCredential(userToken);
     const callAgent = await callClient.createCallAgent(tokenCredential, {
-      displayName: 'Mahak Gupta',
+      displayName: localStore.displayName,
     });
-    dispatch(localActions.SetDisplayName({ displayName: 'Mahak Gupta' }));
     dispatch(
       participantActions.AddParticipant({
         user: {
@@ -132,8 +133,8 @@ const VideoCall = () => {
 
   const renderLocalVideoStream = async () => {
     if (localStore.localVideoStream && localStore.isVideoOn) {
-      const renderer = new VideoStreamRenderer(localStore.localVideoStream);
-      rendererViewRef.current = await renderer.createView({
+      localRendererRef.current = new VideoStreamRenderer(localStore.localVideoStream);
+      rendererViewRef.current = await localRendererRef.current.createView({
         scalingMode: 'Crop',
         isMirrored: true,
       });
@@ -141,6 +142,7 @@ const VideoCall = () => {
       container.appendChild(rendererViewRef.current.target);
     } else if (!localStore.isVideoOn) {
       const container = document.getElementById('local-video');
+      if (localRendererRef.current) localRendererRef.current.dispose();
       container.innerHTML = '';
     }
   };
@@ -154,7 +156,10 @@ const VideoCall = () => {
     }
   };
   useEffect(() => {
-    if (localStore.callToken !== '') joinCall();
+    if (localStore.callToken !== '') {
+      dispatch(participantActions.ResetParticipant());
+      joinCall();
+    }
     // eslint-disable-next-line
   }, [localStore.callToken]);
 
@@ -205,6 +210,10 @@ const VideoCall = () => {
   };
 
   const endCall = async () => {
+    dispatch(homeActions.ResetSelectedUser());
+    dispatch(navActions.ToggleNavHome());
+    dispatch(localActions.RemoveLocalStream());
+    if (localRendererRef.current) localRendererRef.current.dispose();
     await callRef.current.hangUp(false);
   };
 

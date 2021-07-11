@@ -5,6 +5,7 @@ import {
   SET_THREAD_PARTICIPANTS,
   ADD_THREAD_PARTICIPANT,
   ADD_MESSAGE_FRONT,
+  RESET_THREAD,
 } from '../constants/action-types';
 
 const initialState = {
@@ -55,6 +56,14 @@ export default function threadReducer(state = initialState, action) {
       return {
         ...state,
         participants: newPartipants,
+      };
+
+    case RESET_THREAD:
+      return {
+        ...state,
+        threadId: '',
+        messages: [],
+        participants: [],
       };
 
     default:

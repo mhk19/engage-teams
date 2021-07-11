@@ -54,7 +54,18 @@ const getToken = async (req, res) => {
   let identityResponse = { communicationUserId: uid };
   let tokenResponseCall = await identityClient.getToken(identityResponse, ['voip']);
   let tokenResponseChat = await identityClient.getToken(identityResponse, ['chat']);
-  res.json({ call: tokenResponseCall, chat: tokenResponseChat });
+  let displayName;
+  const docquery = User.find({ communicationUserId: uid }).read(ReadPreference.NEAREST);
+  docquery
+    .exec()
+    .then((users) => {
+      if (users.length === 0) res.status(401).end('Not found');
+      else displayName = users[0].displayName;
+    })
+    .catch((err) => {
+      res.status(500).end();
+    });
+  res.json({ call: tokenResponseCall, chat: tokenResponseChat, displayName: displayName });
 };
 
 const addGroup = async (req, res) => {
@@ -69,7 +80,7 @@ const addGroup = async (req, res) => {
       await users[0].save();
     })
     .catch((err) => {
-	    console.log(err);
+      console.log(err);
       res.status(500).end();
     });
   const docquery2 = User.find({ communicationUserId: remoteUID }).read(ReadPreference.NEAREST);
@@ -82,7 +93,7 @@ const addGroup = async (req, res) => {
       await users[0].save();
     })
     .catch((err) => {
-	    console.log(err);
+      console.log(err);
       res.status(500).end();
     });
   res.status(200).json({});
@@ -90,7 +101,7 @@ const addGroup = async (req, res) => {
 
 const findGroup = async (req, res) => {
   const { uid, remoteUID } = req.query;
-	console.log(uid, remoteUID);
+  console.log(uid, remoteUID);
   const docquery = User.find({
     communicationUserId: uid,
     groups: { $elemMatch: { remoteUID: remoteUID } },

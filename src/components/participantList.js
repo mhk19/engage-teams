@@ -5,6 +5,7 @@ import '../styles/sidebar.css';
 import PropTypes from 'prop-types';
 import { CreateConversation } from '../utils/conversation';
 import { SetSelectedUser } from '../actions/homeActions';
+import * as threadActions from '../actions/threadActions';
 
 const Participants = (props) => {
   const participantStore = useSelector((state) => state.participantList);
@@ -26,6 +27,7 @@ const Participants = (props) => {
 
   const handleUserClick = (participant) => {
     if (props.type === 'home') {
+      dispatch(threadActions.ResetThread());
       CreateConversation(
         localStore.userId,
         localStore.displayName,

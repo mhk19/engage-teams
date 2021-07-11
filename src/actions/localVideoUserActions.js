@@ -17,9 +17,8 @@ export const AddLocalStream = (data) => ({
   payload: data,
 });
 
-export const RemoveLocalStream = (data) => ({
+export const RemoveLocalStream = () => ({
   type: REMOVE_LOCAL_STREAM,
-  payload: data,
 });
 
 export const ToggleMic = () => ({

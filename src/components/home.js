@@ -3,6 +3,7 @@ import '../styles/home.css';
 import * as userListActions from '../actions/participantListActions';
 import * as localUserActions from '../actions/localVideoUserActions';
 import * as navActions from '../actions/navigationActions';
+import * as homeActions from '../actions/homeActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../api/userApi';
 import Participants from './participantList';
@@ -19,6 +20,7 @@ const HomePage = () => {
   const homeStore = useSelector((state) => state.home);
 
   useEffect(() => {
+    dispatch(userListActions.ResetParticipant());
     const userToken = localStore.chatToken;
     console.log(userToken);
     chatClientRef.current = new ChatClient(
@@ -46,12 +48,19 @@ const HomePage = () => {
     console.log('clicked');
     dispatch(navActions.ToggleNavHome());
   };
+
+  const handleBackButton = () => {
+    dispatch(homeActions.ResetSelectedUser());
+  };
+
   return (
     <div className="home-outer-container">
       {homeStore.isUserSelected ? (
         <div className="home-message-sidebar message-sidebar">
           <div className="home-message-header">
-            <div className="home-message-header-back">{'< Back'}</div>
+            <div className="home-message-header-back" onClick={handleBackButton}>
+              {'< Back'}
+            </div>
             <div className="home-message-header-start">
               <img src={start_call} className="start-call-img" />
               <p onClick={handleJoinCall}>Start Call</p>

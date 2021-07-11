@@ -45,14 +45,12 @@ export default function deviceReducer(state = initialState, action) {
       };
 
     case SET_MICROPHONE:
-      console.log('reached here');
       return {
         ...state,
         microphone: action.payload.microphone,
       };
 
     case SET_SPEAKER:
-      console.log('reached here');
       return {
         ...state,
         speaker: action.payload.speaker,

@@ -27,6 +27,7 @@ const App = () => {
             chatToken: tokens.chat.token,
           }),
         );
+        dispatch(localUserActions.SetDisplayName({ displayName: tokens.displayName }));
         if (localUserStore.userId === '') dispatch(localUserActions.SetUserId({ userId: id }));
         dispatch(navActions.ToggleNavHome());
         dispatch(navActions.ToggleTabAuth({ isAuth: false }));

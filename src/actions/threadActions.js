@@ -5,6 +5,7 @@ import {
   SET_THREAD_PARTICIPANTS,
   ADD_THREAD_PARTICIPANT,
   ADD_MESSAGE_FRONT,
+  RESET_THREAD,
 } from '../constants/action-types';
 
 export const SetThreadId = (data) => ({
@@ -35,4 +36,8 @@ export const AddThreadParticipant = (data) => ({
 export const SetThreadParticipant = (data) => ({
   type: SET_THREAD_PARTICIPANTS,
   payload: data,
+});
+
+export const ResetThread = () => ({
+  type: RESET_THREAD,
 });

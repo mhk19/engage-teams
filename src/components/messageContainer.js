@@ -52,7 +52,7 @@ const MessageContainer = () => {
     await chatClient.startRealtimeNotifications();
     chatClient.on('chatMessageReceived', (e) => {
       console.log('Notification chatMessageReceived!', e);
-      if (e.type === 'Text') {
+      if (e.type === 'Text' && e.sender.communicationUserId === homeStore.selectedUserId) {
         const msg = {
           type: 'chat',
           payload: {
@@ -71,9 +71,12 @@ const MessageContainer = () => {
   };
 
   useEffect(() => {
+    console.log(thread.threadId);
+    dispatch(threadActions.ResetThread());
     initialiseThread();
+    // return dispatch(threadActions.ResetThread());
     // eslint-disable-next-line
-  }, []);
+  }, [homeStore]);
   const msgThreadStyles = {
     chatContainer: {
       backgroundColor: 'rgba(22, 135, 167, 0.15)',

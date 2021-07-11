@@ -19,7 +19,13 @@ export default function homeReducer(state = initialState, action) {
       };
 
     case RESET_SELECTED_USER:
-      return initialState;
+      return {
+        ...state,
+        isUserSelected: false,
+        selectedUserId: '',
+        threadId: '',
+        groupId: '',
+      };
 
     default:
       return state;
