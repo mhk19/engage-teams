@@ -10,6 +10,7 @@ const initialState = {
 export default function homeReducer(state = initialState, action) {
   switch (action.type) {
     case SET_SELECTED_USER:
+      window.localStorage.setItem('selectedUserId', action.payload.remoteUID);
       return {
         ...state,
         isUserSelected: true,
@@ -19,6 +20,7 @@ export default function homeReducer(state = initialState, action) {
       };
 
     case RESET_SELECTED_USER:
+      window.localStorage.setItem('selectedUserId', '');
       return {
         ...state,
         isUserSelected: false,

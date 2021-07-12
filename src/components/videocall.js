@@ -77,7 +77,10 @@ const VideoCall = () => {
             );
             dispatch(
               participantActions.AddParticipant({
-                user: { userId: 'user 2', displayName: call.remoteParticipants[0].displayName },
+                user: {
+                  userId: call.remoteParticipants[0].identifier.communicationUserId,
+                  displayName: call.remoteParticipants[0].displayName,
+                },
               }),
             );
             dispatch(
@@ -87,6 +90,13 @@ const VideoCall = () => {
             );
           }
         });
+      } else {
+        const selectedUserId = window.localStorage.getItem('selectedUserId');
+        dispatch(
+          participantActions.RemoveParticipant({
+            userId: selectedUserId,
+          }),
+        );
       }
     });
     call.on('isMutedChanged', () => {

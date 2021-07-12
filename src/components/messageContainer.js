@@ -31,12 +31,16 @@ const MessageContainer = (props) => {
   };
 
   const initialiseThread = async () => {
-    const chatClient = localVideoUser.chatClientRef.current;
+    const chatClient = localVideoUser.chatClientRef;
     let chatThreadClient = chatClient.getChatThreadClient(homeStore.threadId);
     chatThreadClientRef.current = chatThreadClient;
     const messages = chatThreadClient.listMessages();
     for await (const message of messages) {
       if (message.type === 'text') {
+        const isHome = window.localStorage.getItem('isHome');
+        let mine = false;
+        if (isHome === 'true' && message.sender.communicationUserId === localVideoUser.userId)
+          mine = true;
         const msg = {
           type: 'chat',
           payload: {
@@ -47,11 +51,11 @@ const MessageContainer = (props) => {
             attached: false,
             type: 'text',
             createdOn: message.createdOn,
+            mine: mine,
           },
         };
         dispatch(threadActions.AddMessageFront({ message: msg }));
       }
-      console.log(message);
     }
   };
 
@@ -94,10 +98,7 @@ const MessageContainer = (props) => {
   return (
     <FluentThemeProvider>
       <div className="chat">
-        <MessageThread
-          styles={msgThreadStyles}
-          messages={thread.messages}
-        />
+        <MessageThread styles={msgThreadStyles} messages={thread.messages} />
       </div>
       <SendBox styles={sendBoxStyles} onSendMessage={sendMessage} />
     </FluentThemeProvider>

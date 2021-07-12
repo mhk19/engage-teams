@@ -31,7 +31,7 @@ export async function CreateConversation(
         },
       ],
     };
-    const createChatThreadResult = await chatClientRef.current.createChatThread(
+    const createChatThreadResult = await chatClientRef.createChatThread(
       createChatThreadRequest,
       createChatThreadOptions,
     );

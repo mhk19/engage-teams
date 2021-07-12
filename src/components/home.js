@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/home.css';
 import * as userListActions from '../actions/participantListActions';
 import * as localUserActions from '../actions/localVideoUserActions';
@@ -17,20 +17,24 @@ import illustration_home from '../assets/images/illustration-home.svg';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const chatClientRef = useRef();
   const localStore = useSelector((state) => state.localVideoUser);
   const homeStore = useSelector((state) => state.home);
-
+  console.log(homeStore.selectedUserId);
   const subscribe = async () => {
-    const chatClient = chatClientRef.current;
+    const chatClient = localStore.chatClientRef;
+    console.log(chatClient);
     await chatClient.startRealtimeNotifications();
     chatClient.on('chatMessageReceived', (e) => {
       console.log('Notification chatMessageReceived!', e);
+      const selectedUserId = window.localStorage.getItem('selectedUserId');
       if (
         e.type === 'Text' &&
-        (e.sender.communicationUserId === homeStore.selectedUserId ||
+        (e.sender.communicationUserId === selectedUserId ||
           e.sender.communicationUserId === localStore.userId)
       ) {
+        const isHome = window.localStorage.getItem('isHome');
+        let mine = false;
+        if (isHome === 'true' && e.sender.communicationUserId === localStore.userId) mine = true;
         const msg = {
           type: 'chat',
           payload: {
@@ -41,6 +45,7 @@ const HomePage = () => {
             attached: false,
             type: 'text',
             createdOn: e.createdOn,
+            mine: mine,
           },
         };
         dispatch(threadActions.AddMessage({ message: msg }));
@@ -53,14 +58,13 @@ const HomePage = () => {
     dispatch(userListActions.ResetParticipant());
     const userToken = localStore.chatToken;
     console.log(userToken);
-    chatClientRef.current = new ChatClient(
+    const chatClientRef = new ChatClient(
       env.endpointUrl,
       new AzureCommunicationTokenCredential(userToken),
     );
     dispatch(localUserActions.SetChatClientRef({ chatClientRef: chatClientRef }));
     getAllUsers().then((users) => {
       users.forEach((user) => {
-        console.log(user);
         if (user.communicationUserId !== localStore.userId) {
           dispatch(
             userListActions.AddParticipant({
@@ -72,9 +76,13 @@ const HomePage = () => {
         }
       });
     });
-    subscribe();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (localStore.chatClientRef) subscribe();
+    // eslint-disable-next-line
+  }, [localStore.chatClientRef]);
   const handleJoinCall = () => {
     console.log('clicked');
     dispatch(navActions.ToggleNavHome());

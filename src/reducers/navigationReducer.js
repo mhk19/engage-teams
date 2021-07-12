@@ -44,6 +44,7 @@ export default function navigationReducer(state = initialState, action) {
 
     case TOGGLE_TAB_HOME:
       console.log(state.isHome);
+      window.localStorage.setItem('isHome', !state.isHome);
       return {
         ...state,
         isHome: !state.isHome,
