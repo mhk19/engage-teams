@@ -95,10 +95,8 @@ const MessageContainer = (props) => {
     <FluentThemeProvider>
       <div className="chat">
         <MessageThread
-          userId={'1'}
           styles={msgThreadStyles}
           messages={thread.messages}
-          showMessageDate={true}
         />
       </div>
       <SendBox styles={sendBoxStyles} onSendMessage={sendMessage} />

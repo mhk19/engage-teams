@@ -4,8 +4,6 @@ import * as remoteActions from '../actions/remoteVideoUserActions';
 import * as localActions from '../actions/localVideoUserActions';
 import * as participantActions from '../actions/participantListActions';
 import * as deviceManagementActions from '../actions/deviceActions';
-import * as navActions from '../actions/navigationActions';
-import * as homeActions from '../actions/homeActions';
 import Participants from './participantList';
 import mic from '../assets/images/mic.svg';
 import mute_mic from '../assets/images/mute_mic.svg';
@@ -209,11 +207,7 @@ const VideoCall = () => {
   };
 
   const endCall = async () => {
-    dispatch(homeActions.ResetSelectedUser());
-    dispatch(navActions.ToggleNavHome());
-    dispatch(localActions.RemoveLocalStream());
-    if (localRendererRef.current) localRendererRef.current.dispose();
-    await callRef.current.hangUp(false);
+    window.location.reload();
   };
 
   return (

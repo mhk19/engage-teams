@@ -21,6 +21,8 @@
 }
 
 .home-heading {
+  position: absolute;
+  bottom: 10rem;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;

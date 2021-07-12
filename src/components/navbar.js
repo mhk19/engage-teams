@@ -11,9 +11,11 @@ import settings_active from '../assets/images/settings-active.svg';
 import home_active from '../assets/images/home-active.svg';
 import home from '../assets/images/home-default.svg';
 import '../styles/navbar.css';
+import { getInitials } from '../utils/userIcon';
 
 const NavBar = () => {
   const navStore = useSelector((state) => state.navigation);
+  const localStore = useSelector((state) => state.localVideoUser);
   const dispatch = useDispatch();
 
   const toggleParticipantTab = () => {
@@ -26,6 +28,11 @@ const NavBar = () => {
 
   const toggleSettingsTab = () => {
     dispatch(navigationActions.ToggleSettingsTab());
+  };
+
+  const getAcronym = () => {
+    if (localStore.displayName) return getInitials(localStore.displayName);
+    return '';
   };
 
   return (
@@ -61,7 +68,7 @@ const NavBar = () => {
         )}
       </div>
       <div className="user-container">
-        <p className="user-icon">MG</p>
+        <p className="user-icon">{getAcronym()}</p>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const Participants = (props) => {
   const participantStyle = {
     root: {
       backgroundColor: 'white',
-      height: '2.5rem',
+      height: 'max-content',
       width: '25rem',
       borderRadius: '0.5rem',
       marginTop: '1rem',

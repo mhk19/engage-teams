@@ -13,6 +13,7 @@ import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import env from '../env/env';
 import MessageContainer from './messageContainer';
 import start_call from '../assets/images/start-call.svg';
+import illustration_home from '../assets/images/illustration-home.svg';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ const HomePage = () => {
         </div>
       ) : (
         <div className="home-left">
-          <div className="home-conversation">
+          {/* <div className="home-conversation">
             <h2 className="home-heading">Start an instant conversation</h2>
             <input className="home-input" placeholder="Enter conversation name" />
             <button className="home-button-solid">Start Conversation</button>
@@ -109,7 +110,9 @@ const HomePage = () => {
           <div className="home-conversation">
             <input className="home-input input-bottom" placeholder="Enter conversation ID" />
             <button className="home-button-solid">Join Conversation</button>
-          </div>
+          </div> */}
+          <img src={illustration_home} />
+          <h2 className="home-heading">Select user to start an instant conversation</h2>
         </div>
       )}
       <Participants type="home" />
