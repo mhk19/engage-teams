@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+<div style="display:flex; align-items:center">
+<img src='./src/assets/images/logo.svg'/>
+<h1>PiperChat</h1>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> A cross-platform chat and call platform.
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+PiperChat is a cross-platform video-calling and chat application with a sleek and intuitive UX, developed using Microsoft Azure Services.
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Authentication
+2. Chat
+    
+    1. Chats of video call are retained.
+    2. Real-time Notification for incoming chat messages.
+3. Video Call
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   1. Mute yourself.
+   2. Turn off your video.
+   3. Change the microphone.
+   4. Change the speaker.
+   5. Chat during the meeting which is retained even after the meeting.
 
-### `yarn test`
+## The Application of Agile Methodology
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. In the first step of development, the use cases, tech stack and feasibility of project were decided.
 
-### `yarn build`
+2. As the second step, UI/UX designs were made.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Development was done in 2 sprints -
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   1. User Authentication and just video chat.
+   2. Other video chat features like device management, outgoing video and audio management, chat during call were done.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. The features developed were released in production.
+5. Adapt feature was announced. So the 1st and 2nd second steps were repeated.
+6. Home page of the application where users can chat with each other was developed in a sprint.
+7. The complete app was released in production.
 
-### `yarn eject`
+> One sprint was generally of 4-5 days.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Tech Stack
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Client - React Framework
+2. Server - Express Framework
+3. Database - Azure CosmosDB (MongoDB)
+4. For video call and chat - Azure communication services
+5. For hosting the server - Azure Ubuntu VM
+6. UI Library - Microsorft FluentUI Library
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Setup instructions
+> Install node and create azure cosmos db and azure communication services accounts.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Clone the repository.
+2. Create a directory env in server folder and create a file env.js in it. Add the following details in env.js file -
+```
+const env = {
+  // cosmos db details
+  dbName: ,
+  key: ,
+  port: ,
+  // Azure communication services details
+  communicationString: ,
+};
 
-## Learn More
+export default env;
+```
+3. Change the serverURL in src/config/config.js to `http://localhost:3001`
+4. Run `npm install` and then `npm start` in root to start the client.
+5. Run `cd server && node server.js` to run the server.
+6. Access the app at http://localhost:3000
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
