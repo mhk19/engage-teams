@@ -53,7 +53,7 @@ PiperChat is a cross-platform video-calling and chat application with a sleek an
 3. Database - Azure CosmosDB (MongoDB)
 4. For video call and chat - Azure communication services
 5. For hosting the server - Azure Ubuntu VM
-6. UI Library - Microsorft FluentUI Library
+6. UI Library - Microsoft FluentUI Library
 
 ## Setup instructions
 > Install node and create azure cosmos db and azure communication services accounts.
