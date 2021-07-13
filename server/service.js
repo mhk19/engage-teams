@@ -23,7 +23,7 @@ const login = (req, res) => {
   docquery
     .exec()
     .then((users) => {
-      if (users.length === 0) res.status(401).end('Not found');
+      if (users.length === 0) res.json('Not found');
       else res.json(users[0].communicationUserId);
     })
     .catch((err) => {
