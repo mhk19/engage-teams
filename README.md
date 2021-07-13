@@ -5,6 +5,8 @@
 
 > A cross-platform chat and call platform.
 
+Working Prototype - https://mahak.ayanc.codes/
+
 ## Introduction
 
 PiperChat is a cross-platform video-calling and chat application with a sleek and intuitive UX, developed using Microsoft Azure Services.
@@ -28,7 +30,7 @@ PiperChat is a cross-platform video-calling and chat application with a sleek an
 
 1. In the first step of development, the use cases, tech stack and feasibility of project were decided.
 
-2. As the second step, UI/UX designs were made.
+2. As the second step, UI/UX designs were made. Here is the [figma file](https://www.figma.com/file/gTRYRZmlEnU11bXk8xJv3f/PiperChat?node-id=5%3A216).
 
 3. Development was done in 2 sprints -
 
@@ -73,3 +75,5 @@ export default env;
 5. Run `cd server && node server.js` to run the server.
 6. Access the app at http://localhost:3000
 
+Developed by Mahak Gupta (gmahak1@gmail.com)
+> This project is submission of Microsoft Engage 2021.
