@@ -11,11 +11,11 @@ PiperChat is a cross-platform video-calling and chat application with a sleek an
 
 ## Features
 
-1. Authentication
+1. User Authentication 
 2. Chat
     
-    1. Chats of video call are retained.
-    2. Real-time Notification for incoming chat messages.
+    1. Chats of video call are retained i.e, users can continue the conversation after the meeting and start the conversation before the meeting.
+    2. Real-time Notification for incoming chat messages so that user doesn't miss any message.
 3. Video Call
 
    1. Mute yourself.
@@ -45,7 +45,7 @@ PiperChat is a cross-platform video-calling and chat application with a sleek an
 ## Tech Stack
 
 1. Client - React Framework
-2. Server - Express Framework
+2. Server - NodeJS
 3. Database - Azure CosmosDB (MongoDB)
 4. For video call and chat - Azure communication services
 5. For hosting the server - Azure Ubuntu VM
