@@ -11,7 +11,6 @@ const MessageContainer = (props) => {
   const thread = useSelector((state) => state.thread);
   const dispatch = useDispatch();
   const homeStore = useSelector((state) => state.home);
-  const navStore = useSelector((state) => state.navigation);
 
   const sendMessage = async (content) => {
     const sendMessageRequest = {
@@ -21,13 +20,7 @@ const MessageContainer = (props) => {
       senderDisplayName: localVideoUser.displayName,
       type: 'text',
     };
-    const sendChatMessageResult = await chatThreadClientRef.current.sendMessage(
-      sendMessageRequest,
-      sendMessageOptions,
-    );
-    const messageId = sendChatMessageResult.id;
-    console.log(`Message sent!, message id:${messageId}`);
-    console.log(navStore.isHome);
+    await chatThreadClientRef.current.sendMessage(sendMessageRequest, sendMessageOptions);
   };
 
   const initialiseThread = async () => {
@@ -60,7 +53,6 @@ const MessageContainer = (props) => {
   };
 
   useEffect(() => {
-    console.log(thread.threadId);
     dispatch(threadActions.ResetThread());
     initialiseThread();
     // eslint-disable-next-line

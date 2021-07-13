@@ -15,10 +15,8 @@ const App = () => {
   const dispatch = useDispatch();
   const localUserStore = useSelector((state) => state.localVideoUser);
   const navStore = useSelector((state) => state.navigation);
-  console.log(navStore);
   useEffect(() => {
     const id = getCookie('userid');
-    console.log(localUserStore.callToken);
     if (id && localUserStore.callToken === '') {
       userFunctions.getToken(id).then((tokens) => {
         dispatch(

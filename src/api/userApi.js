@@ -9,7 +9,6 @@ async function login(email, password) {
     data: { email: email, password: password },
     dataType: 'json',
   }).done((res) => {
-    console.log(res, 'hi');
     return res.responseJSON;
   });
 }
@@ -21,7 +20,6 @@ function getToken(uid) {
     data: { uid: uid },
     dataType: 'json',
   }).done((res) => {
-    console.log(res);
     return res.responseJSON;
   });
 }
@@ -53,20 +51,17 @@ function getGroup(uid, remoteUID) {
     data: { uid: uid, remoteUID: remoteUID },
     dataType: 'json',
   }).done((res) => {
-    console.log(res, 'hi');
     return res;
   });
 }
 
 function addGroup(uid, remoteUID, groupID, threadID) {
-  console.log('reached here');
   return $.ajax({
     method: 'POST',
     url: `${CONFIG.serverURL}/addGroup`,
     data: { uid: uid, remoteUID: remoteUID, groupID: groupID, threadID: threadID },
     dataType: 'json',
   }).done((res) => {
-    console.log(res);
     return res;
   });
 }

@@ -7,13 +7,10 @@ import '../styles/sidebar.css';
 const DeviceSettings = () => {
   const deviceStore = useSelector((state) => state.devices);
   const dispatch = useDispatch();
-  console.log(deviceStore, 'hello');
   const onChangeMicrophone = (event, option, index) => {
-    console.log('reached here');
     dispatch(deviceManagementActions.SetMicrophone({ microphone: deviceStore.microphones[index] }));
   };
   const onChangeSpeaker = (event, option, index) => {
-    console.log('reached here');
     dispatch(deviceManagementActions.SetSpeaker({ speaker: deviceStore.speakers[index] }));
   };
   return (

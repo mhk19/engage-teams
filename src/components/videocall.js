@@ -53,9 +53,7 @@ const VideoCall = () => {
     const localVideo = new LocalVideoStream(camera);
     dispatch(localActions.AddLocalStream({ localVideoStream: localVideo }));
     await call.startVideo(localVideo);
-    console.log(call.state);
     call.on('stateChanged', () => {
-      console.log(call);
       if (localStore.isMute != call.isMuted) dispatch(localActions.ToggleMic());
       if (call.remoteParticipants.length !== 0) {
         dispatch(
@@ -68,7 +66,6 @@ const VideoCall = () => {
     call.on('remoteParticipantsUpdated', () => {
       if (call.remoteParticipants.length !== 0) {
         call.remoteParticipants[0].on('stateChanged', (state) => {
-          console.log(state, call.remoteParticipants[0]);
           if (state === 'Connected') {
             dispatch(
               remoteActions.SetRemoteUserName({
@@ -89,6 +86,9 @@ const VideoCall = () => {
               }),
             );
           }
+          call.remoteParticipants[0].videoStreams[0].on('isAvailableChanged', () => {
+            dispatch(remoteActions.ToggleIsRemoteVideoAvailable());
+          });
         });
       } else {
         const selectedUserId = window.localStorage.getItem('selectedUserId');
@@ -99,12 +99,8 @@ const VideoCall = () => {
         );
       }
     });
-    call.on('isMutedChanged', () => {
-      console.log(call.isMuted);
-    });
-    call.on('localVideoStreamsUpdated', () => {
-      console.log('Local video stream updated');
-    });
+    call.on('isMutedChanged', () => {});
+    call.on('localVideoStreamsUpdated', () => {});
     deviceManager.on('audioDevicesUpdated', async () => {
       const microphones = await deviceManagerRef.current.getMicrophones();
       const speakers = await deviceManagerRef.current.getSpeakers();
@@ -115,12 +111,8 @@ const VideoCall = () => {
         }),
       );
     });
-    deviceManager.on('selectedMicrophoneChanged', () => {
-      console.log('microphone changed', deviceManager.selectedMicrophone);
-    });
-    deviceManager.on('selectedSpeakerChanged', () => {
-      console.log('speaker changed', deviceManager.selectedSpeaker);
-    });
+    deviceManager.on('selectedMicrophoneChanged', () => {});
+    deviceManager.on('selectedSpeakerChanged', () => {});
   };
 
   const deviceManagement = async () => {
@@ -155,11 +147,14 @@ const VideoCall = () => {
   };
 
   const renderRemoteVideoStream = async () => {
-    if (remoteStore.remoteVideoStream && remoteStore.remoteVideoStream.isAvailable) {
+    if (remoteStore.remoteVideoStream && remoteStore.isAvailable) {
       const renderer = new VideoStreamRenderer(remoteStore.remoteVideoStream);
       remoteRendererViewRef.current = await renderer.createView({ scalingMode: 'Crop' });
       const container = document.getElementById('remote-video');
       container.appendChild(remoteRendererViewRef.current.target);
+    } else if (remoteStore.remoteVideoStream && !remoteStore.isAvailable) {
+      const container = document.getElementById('remote-video');
+      container.innerHTML = '';
     }
   };
   useEffect(() => {
@@ -178,7 +173,7 @@ const VideoCall = () => {
   useEffect(() => {
     renderRemoteVideoStream();
     // eslint-disable-next-line
-  }, [remoteStore.remoteVideoStream]);
+  }, [remoteStore.remoteVideoStream, remoteStore.isAvailable]);
 
   useEffect(() => {
     renderLocalVideoStream();
@@ -204,7 +199,6 @@ const VideoCall = () => {
   }, [deviceStore.speaker]);
 
   const handleMute = async () => {
-    console.log(localStore.isMute, callRef.current.isMuted);
     if (localStore.isMute) await callRef.current.unmute();
     else await callRef.current.mute();
     dispatch(localActions.ToggleMic());
