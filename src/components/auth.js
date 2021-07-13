@@ -19,7 +19,6 @@ const WelcomePage = (props) => {
     if (name === '' || email === '' || password === '') alert('Please fill all the fields');
     else {
       register(name, email, password).then((user) => {
-        console.log(user);
         setCookie('userid', user.communicationUserId);
         dispatch(localUserActions.SetUserId({ userId: user.communicationUserId }));
       });
@@ -29,13 +28,14 @@ const WelcomePage = (props) => {
   const handleLogin = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    console.log('reached here', email, password);
     if (email === '' || password === '') alert('Please fill all the fields');
     else {
       login(email, password).then((res) => {
-        console.log(res);
-        setCookie('userid', res);
-        dispatch(localUserActions.SetUserId({ userId: res }));
+        if (res === 'Not found') alert('Invalid credentials');
+        else {
+          setCookie('userid', res);
+          dispatch(localUserActions.SetUserId({ userId: res }));
+        }
       });
     }
   };
@@ -84,7 +84,7 @@ const WelcomePage = (props) => {
         )}
         {props.authtype === 'Login' ? (
           <div className="auth-footer-right">
-            <p className="auth-graytext">Don&apost have an account?</p>
+            <p className="auth-graytext">Don&apos;t have an account?</p>
             <p className="auth-text-button" onClick={switchToRegister}>
               Register here
             </p>

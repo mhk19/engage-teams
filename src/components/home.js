@@ -14,18 +14,16 @@ import env from '../env/env';
 import MessageContainer from './messageContainer';
 import start_call from '../assets/images/start-call.svg';
 import illustration_home from '../assets/images/illustration-home.svg';
+import logo from '../assets/images/logo.svg';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const localStore = useSelector((state) => state.localVideoUser);
   const homeStore = useSelector((state) => state.home);
-  console.log(homeStore.selectedUserId);
   const subscribe = async () => {
     const chatClient = localStore.chatClientRef;
-    console.log(chatClient);
     await chatClient.startRealtimeNotifications();
     chatClient.on('chatMessageReceived', (e) => {
-      console.log('Notification chatMessageReceived!', e);
       const selectedUserId = window.localStorage.getItem('selectedUserId');
       if (
         e.type === 'Text' &&
@@ -49,15 +47,30 @@ const HomePage = () => {
           },
         };
         dispatch(threadActions.AddMessage({ message: msg }));
-        console.log(thread.messages);
+      } else {
+        if (e.type === 'Text')
+          sendNotification(e.senderDisplayName + ' sent a message.', e.message);
       }
     });
+  };
+
+  const sendNotification = (text, body) => {
+    if (!('Notification' in window)) {
+      alert('This browser does not support desktop notification');
+    } else if (Notification.permission === 'granted') {
+      var notification = new Notification(text, { body: body, icon: logo });
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === 'granted') {
+          var notification = new Notification(text, { body: body, icon: logo });
+        }
+      });
+    }
   };
 
   useEffect(() => {
     dispatch(userListActions.ResetParticipant());
     const userToken = localStore.chatToken;
-    console.log(userToken);
     const chatClientRef = new ChatClient(
       env.endpointUrl,
       new AzureCommunicationTokenCredential(userToken),
@@ -84,7 +97,6 @@ const HomePage = () => {
     // eslint-disable-next-line
   }, [localStore.chatClientRef]);
   const handleJoinCall = () => {
-    console.log('clicked');
     dispatch(navActions.ToggleNavHome());
   };
 

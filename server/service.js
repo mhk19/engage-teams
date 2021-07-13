@@ -43,7 +43,6 @@ const createUsers = async (req, res) => {
       res.status(200).json(user);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send(err);
     });
 };
@@ -80,7 +79,6 @@ const addGroup = async (req, res) => {
       await users[0].save();
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).end();
     });
   const docquery2 = User.find({ communicationUserId: remoteUID }).read(ReadPreference.NEAREST);
@@ -93,7 +91,6 @@ const addGroup = async (req, res) => {
       await users[0].save();
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).end();
     });
   res.status(200).json({});
@@ -101,7 +98,6 @@ const addGroup = async (req, res) => {
 
 const findGroup = async (req, res) => {
   const { uid, remoteUID } = req.query;
-  console.log(uid, remoteUID);
   const docquery = User.find({
     communicationUserId: uid,
     groups: { $elemMatch: { remoteUID: remoteUID } },

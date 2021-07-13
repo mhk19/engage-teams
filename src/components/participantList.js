@@ -44,9 +44,7 @@ const Participants = (props) => {
             }),
           );
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
 

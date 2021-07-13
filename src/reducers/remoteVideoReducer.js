@@ -19,6 +19,7 @@ export default function remoteVideoReducer(state = initialState, action) {
       return {
         ...state,
         remoteVideoStream: action.payload.remoteVideoStream,
+        isAvailable: true,
       };
 
     case REMOVE_REMOTE_STREAM:
@@ -30,7 +31,7 @@ export default function remoteVideoReducer(state = initialState, action) {
     case TOGGLE_IS_REMOTE_VIDEO_AVAILABLE:
       return {
         ...state,
-        isAvailable: action.payload.isAvailable,
+        isAvailable: !state.isAvailable,
       };
 
     case SET_REMOTE_USER_NAME:
