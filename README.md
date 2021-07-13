@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/mhk19/mahak_g/_apis/build/status/mhk19.engage-teams?branchName=master)](https://dev.azure.com/mhk19/mahak_g/_build/latest?definitionId=1&branchName=master)
+
 <div style="display:flex; align-items:center">
 <img src='./src/assets/images/logo.svg'/>
 <h1>PiperChat</h1>
